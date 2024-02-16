@@ -1,0 +1,8 @@
+sphinx
+sphinx_copybutton
+sphinx-prompt
+sphinxemoji
+myst_parser
+sphinx_design
+autodocsumm
+sphinx_nefertiti

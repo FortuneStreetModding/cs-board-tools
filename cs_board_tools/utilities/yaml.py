@@ -1,6 +1,6 @@
 """These functions handle loading yaml and yaml schema.
 """
-import yaml
+from ruamel.yaml import YAML, YAMLError
 import json
 import jsonschema
 import requests
@@ -46,11 +46,13 @@ def load_yaml(yaml_filename, yaml_schema):
         stream.seek(0x0)
 
         try:
-            yamlContent = yaml.safe_load(stream)
+            yaml=YAML(typ='safe')
+            yamlContent = yaml.load(stream)
             board_dict = json.dumps(yamlContent)
-            yamlContent = yaml.safe_load(board_dict)
+            yamlContent = yaml.load(board_dict)
+
             jsonschema.validate(yamlContent, yaml_schema)
-        except yaml.YAMLError as exc:
+        except YAMLError as exc:
             error_messages.append(str(exc))
         except jsonschema.ValidationError as err:
             error_messages.append(str(err))

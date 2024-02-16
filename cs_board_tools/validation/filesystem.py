@@ -35,7 +35,7 @@ def check_for_screenshots(bundle: Bundle, skip: bool) -> CheckResult:
     informational_messages = []
     warning_messages = []
 
-    frbs = bundle.frb_filenames
+    frbs = bundle.filenames.frb
     webps = bundle.screenshots
 
     if webps is not None:

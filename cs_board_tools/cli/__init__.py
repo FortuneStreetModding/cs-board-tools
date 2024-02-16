@@ -48,10 +48,7 @@ validate_short_help_message = (
 )
 
 
-@click.group(
-    context_settings={'help_option_names': ['-h', '--help']},
-    invoke_without_command=True
-)
+@click.group(context_settings={'help_option_names': ['-h', '--help']})
 @click.version_option(version=__version__, prog_name='cs-board-tools')
 @click.pass_context
 def cs_board_tools(ctx: click.Context):

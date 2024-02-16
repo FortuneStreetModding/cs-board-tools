@@ -10,6 +10,33 @@ from cs_board_tools.schema.bundle import Bundle
 from cs_board_tools.utilities import extract_zip_file, cleanup
 
 
+
+def cleanup_filenames(filenames: list[str]) -> list[str]:
+    """
+    Takes in a list of filenames and cleans them up. This means removing
+    any directory/path information, trailing slashes, or other common
+    characters in an attempt to normalize these values as much as possible.
+
+    :param filenames: A list of filenames. These values can be relative or
+        absolute, or a combination of both.
+    :type filenames: list[str]
+
+    :return: A normalized list of filenames. (filename.extension)
+    :rtype: list[str]
+    """
+    better_filenames = []
+    for f in filenames:
+        cleaned_up_f = f
+        if cleaned_up_f[0:2] == "./":
+            cleaned_up_f = cleaned_up_f[2:]
+        if cleaned_up_f[-1] == "/":
+            cleaned_up_f = cleaned_up_f[:-1]
+        if "/" in cleaned_up_f:
+            cleaned_up_f = cleaned_up_f.rsplit("/", 1)[1]
+        better_filenames.append(cleaned_up_f)
+    return better_filenames
+
+
 def read_files(files: list[Path]) -> list[Bundle]:
     """
     Reads one or more Map Bundles from a single directory. (A list of files)
@@ -28,18 +55,24 @@ def read_files(files: list[Path]) -> list[Bundle]:
     if not files:
         return ["no files found!"]
 
+    brstm_filenames = []
+    cmpres_filenames = []
     frb_filenames = []
-    webp_filenames = []
     png_filenames = []
+    webp_filenames = []
     yaml_filenames = []
     zip_filenames = []
+
     directories = []
     unused_filenames = []
 
     # get all the files we care about:
-
     for x in files:
-        if x.endswith(".frb"):
+        if x.endswith(".brstm"):
+            brstm_filenames.append(x)
+        elif x.endswith(".cmpres"):
+            cmpres_filenames.append(x)
+        elif x.endswith(".frb"):
             frb_filenames.append(x)
         elif x.endswith(".png"):
             png_filenames.append(x)
@@ -62,7 +95,14 @@ def read_files(files: list[Path]) -> list[Bundle]:
 
         bundle.authors = bundle.descriptor.authors
         bundle.background = bundle.descriptor.background
-        bundle.description = bundle.descriptor.description
+
+        bundle.filenames.brstm = cleanup_filenames(brstm_filenames)
+        bundle.filenames.cmpres = cleanup_filenames(cmpres_filenames)
+        bundle.filenames.frb = cleanup_filenames(frb_filenames)
+        bundle.filenames.png = cleanup_filenames(png_filenames)
+        bundle.filenames.webp = cleanup_filenames(webp_filenames)
+        bundle.filenames.yaml = cleanup_filenames(yaml_filenames)
+
         bundle.icon = bundle.descriptor.icon
         bundle.music = bundle.descriptor.music
         bundle.name = bundle.descriptor.name
@@ -86,7 +126,6 @@ def read_files(files: list[Path]) -> list[Bundle]:
             board_files.append(read_frb(filename))
 
         bundle.frbs = board_files
-        bundle.frb_filenames = frb_filenames
         bundle.screenshots = screenshots
 
         bundles.append(bundle)
@@ -122,31 +161,11 @@ def read_zip(file_path: Path, temp_dir_path: str = "./temp") -> list[Bundle]:
     if not files:
         return ["no files found!"]
 
-    frb_filenames = []
-    webp_filenames = []
-    png_filenames = []
-    yaml_filenames = []
-    zip_filenames = []
     directories = []
-    unused_filenames = []
 
-    # get all the files we care about:
-
-    for x in files:
-        if x.endswith(".frb"):
-            frb_filenames.append(x)
-        elif x.endswith(".png"):
-            png_filenames.append(x)
-        elif x.endswith(".webp"):
-            webp_filenames.append(x)
-        elif x.endswith(".yaml"):
-            yaml_filenames.append(x)
-        elif x.endswith(".zip"):
-            zip_filenames.append(x)
-        elif x.endswith("/"):
+    for x in files:  # I love this joke
+        if x.endswith("/"):
             directories.append(x)
-        else:
-            unused_filenames.append(x)
 
     files_minus_directories = [f for f in files if f not in directories]
 

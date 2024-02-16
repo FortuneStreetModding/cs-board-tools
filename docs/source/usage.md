@@ -187,12 +187,12 @@ cs-board-tools display -d .
 :::
 :::{tab-item} frb
 ```bash
-cs-board-tools display -f SomeAwesomeBundle.frb
+cs-board-tools display -f SomeAwesomeBoard.frb
 ```
 :::
 :::{tab-item} yaml
 ```bash
-cs-board-tools display -f SomeAwesomeBundle.yaml
+cs-board-tools display -f SomeAwesomeMapDescriptor.yaml
 ```
 :::
 :::{tab-item} zip
@@ -212,12 +212,12 @@ cs-board-tools validate -d .
 :::
 :::{tab-item} frb
 ```bash
-cs-board-tools validate -f SomeAwesomeBundle.frb
+cs-board-tools validate -f SomeAwesomeBoard.frb
 ```
 :::
 :::{tab-item} yaml
 ```bash
-cs-board-tools validate -f SomeAwesomeBundle.yaml
+cs-board-tools validate -f SomeAwesomeMapDescriptor.yaml
 ```
 :::
 :::{tab-item} zip

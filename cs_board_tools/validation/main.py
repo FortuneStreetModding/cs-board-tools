@@ -92,7 +92,7 @@ def validate_bundle(
         board_result.board_name = b.name
 
         board_result.naming = check_naming_convention(
-            filename=b.descriptor.frbs[0],
+            bundle=b,
             skip=skip_naming_convention_test
         )
         board_result.consistency = check_consistency(
@@ -217,7 +217,7 @@ def validate_board_file(
     for f in frbs:
         reset_errors_and_warnings()
         board_result = ValidationResult()
-        board_result.board_name = "Unknown .frb"
+        board_result.board_name.en = "Unknown .frb"
 
         board_result.door = check_doors(
             frb=f,
@@ -312,7 +312,7 @@ def validate_descriptor(
     for d in descriptors:
         reset_errors_and_warnings()
         board_result = ValidationResult()
-        board_result.board_name = d.name.en
+        board_result.board_name = d.name
 
         board_result.music_download = check_music_download(
             descriptor=d,

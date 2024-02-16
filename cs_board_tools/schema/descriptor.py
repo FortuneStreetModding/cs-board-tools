@@ -3,20 +3,19 @@ the MapDescriptor class itself -- live in this module.
 """
 from dataclasses import dataclass, field
 from cs_board_tools.schema.validation import CheckResult
-from cs_board_tools.utilities import load_yaml, load_yaml_schema
-
-import yaml
-
+from cs_board_tools.utilities import (
+    load_yaml,
+    load_yaml_schema,
+)
+from ruamel.yaml import YAML
+yaml = YAML()
 
 @dataclass
 class AuthorInfo:
-    """A dataclass holding the author(s) name
+    """A dataclass holding an author's name
     and homepage information."""
     name: str = field(default="")
     url: str = field(default="")
-
-    def toYaml(self):
-        return yaml.dump(self, default=lambda o: o.__dict__)
 
 
 @dataclass
@@ -75,9 +74,6 @@ class CustomMusic:
     slurpodrome_start: str = field(default="")
     slurpodrome_race: str = field(default="")
     slurpodrome_win: str = field(default="")
-
-    def toYaml(self):
-        return yaml.dump(self, default=lambda o: o.__dict__)
 
 
 @dataclass
@@ -157,6 +153,11 @@ class SwitchRotationOriginPoints:
     Effectively, if you want your districts to rotate like they
     do in the Colossus board, set these to the center of the points
     they should rotate around.
+
+    This class holds only one coordinate, but the MapDescriptor object
+    holds list[SwitchRotationOriginPoints]. (Think about how Colossus
+    rotates both on the left side and the right side -- it has two
+    switch rotation origin points.)
     """
     x: int = 0
     y: int = 0
@@ -172,7 +173,6 @@ class TourModeInfo:
     """
     bankruptcy_limit: int = 1
     clear_rank: int = 1
-    initial_cash: int = 1000
     opponent_1: str = field(default="Mario")
     opponent_2: str = field(default="Luigi")
     opponent_3: str = field(default="Toad")
@@ -204,37 +204,27 @@ class MapDescriptor:
     # name and description in the various languages
     name: Name = field(default_factory=Name)
     description: Description = field(default_factory=Description)
-
-    # author(s) and list of changelog entries (version, message)
-    authors: list[AuthorInfo] = field(default_factory=list)
-    changelog: list[ChangeLogEntry] = field(default_factory=list)
-
-    # basic board settings
-    background: str = field(default="")
-    music: CustomMusic = field(default_factory=CustomMusic)
-    frbs: list[str] = field(default_factory=list)
-    icon: str = field(default="")
     rule_set: str = field(default="")
     theme: str = field(default="")
+    initial_cash: str = field(default="")
+    target_amount: str = field(default="")
+    base_salary: str = field(default="")
+    salary_increment: str = field(default="")
+    max_dice_roll: str = field(default="")
+    frbs: list[str] = field(default_factory=list)
+    background: str = field(default="")
+    switch_rotation_origin_points: list[SwitchRotationOriginPoints] = field(
+        default_factory=list
+    )
+    icon: str = field(default="")
+    music: CustomMusic = field(default_factory=CustomMusic)
+    looping: LoopingInfo = field(default_factory=LoopingInfo)
     tour_mode: TourModeInfo = field(default_factory=TourModeInfo)
+    changelog: list[ChangeLogEntry] = field(default_factory=list)
+    authors: list[AuthorInfo] = field(default_factory=list)
     venture_cards: VentureCardInfo = field(default_factory=VentureCardInfo)
 
-    # rules
-    base_salary: str = field(default="")
-    initial_cash: str = field(default="")
-    max_dice_roll: str = field(default="")
-    salary_increment: str = field(default="")
-    target_amount: str = field(default="")
-
-    # Rotation when pressing a button
-    switch_rotation_origin_points: SwitchRotationOriginPoints = field(
-        default_factory=SwitchRotationOriginPoints
-    )
-
-    # parameters for boards with Galaxy-style looping
-    looping: LoopingInfo = field(default_factory=LoopingInfo)
-
-    # # District and Shop Names
+    # District and Shop Names
     capital_shop_names: ShopNames = field(default_factory=ShopNames)
     shop_names: ShopNames = field(default_factory=ShopNames)
     district_names: DistrictNames = field(default_factory=DistrictNames)
@@ -263,7 +253,6 @@ def build_map_descriptor_object(yaml_filename) -> MapDescriptor:
     d = MapDescriptor()
     yaml = results[0]
     d.yaml_validation_results = results[1]
-
     if "authors" in yaml:
         for a in yaml["authors"]:
             if "name" in a:

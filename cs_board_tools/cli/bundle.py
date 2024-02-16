@@ -9,12 +9,14 @@ from ..schema.validation import ValidationResultBundle
 
 
 def print_bundles(bundles: list[Bundle]):
-    """Prints a list of Bundles to CLI. Uses PrettyTable to
+    """
+    Prints a list of Bundles to CLI. Uses PrettyTable to
     print nicely-formatted ASCII tables.
 
-    Args:
-        bundles (list[Bundle]): The Bundles you would like to print.
+    :param bundles: The Bundles you would like to print.
+    :type bundles: list[Bundle]
     """
+
     if len(bundles) == 0 or len(bundles[0].frbs) == 0:
         print("Please provide a valid input.")
         sys.exit(1)
@@ -49,17 +51,16 @@ def print_bundles(bundles: list[Bundle]):
         b_table.add_row(["Background", b.background])
         b_table.add_row(["Icon", b.icon])
         b_table.add_row([" ", " "])
-        frb_filenames = [f.rsplit('/', 1)[-1] for f in b.frb_filenames]
-        webp_filenames = [f.rsplit('/', 1)[-1] for f in b.screenshots]
+        webp_filenames = b.filenames.webp
         if not webp_filenames:
             webp_filenames = ["None"]
         if len(b.frbs) > 1:
-            b_table.add_row(["Board Files", ", \n".join(frb_filenames)])
+            b_table.add_row(["Board Files", ", \n".join(b.filenames.frb)])
 
             b_table.add_row([" ", " "])
             b_table.add_row(["Screenshot Files", ", \n".join(webp_filenames)])
         else:
-            b_table.add_row(["Board File", f"{frb_filenames[0]}"])
+            b_table.add_row(["Board File", f"{b.filenames.frb[0]}"])
             b_table.add_row(["Screenshot File", f"{webp_filenames[0]}"])
 
         b_table.align["Attribute"] = "r"
@@ -68,10 +69,11 @@ def print_bundles(bundles: list[Bundle]):
 
 
 def print_bundles_validation_result(results: ValidationResultBundle):
-    """Prints data from a ValidationResultBundle object to CLI.
+    """
+    Prints data from a ValidationResultBundle object to CLI.
 
-    Args:
-        results (ValidationResultBundle): The results you would like to print.
+    :param results: The results you would like to print.
+    :type results: ValidationResultBundle
     """
 
     found = (
