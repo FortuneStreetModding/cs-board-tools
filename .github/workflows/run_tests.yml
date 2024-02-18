@@ -1,8 +1,8 @@
-name: Test
+name: Run tests
 
 on:
   push:
-    branches: [nikkums/development] # for now
+    branches: ["nikkums/development"] # for now
 
 jobs:
   build:
@@ -21,14 +21,3 @@ jobs:
         run: |
           pip install pytest pytest-cov
           pytest --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-  pages:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-    - id: deployment
-      uses: sphinx-notes/pages@v3
