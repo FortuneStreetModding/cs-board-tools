@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'cs-board-tools'
-copyright = '2023, Custom Street'
+copyright = '2023-2024, Custom Street'
 author = 'Custom Street'
-release = '0.0.1'
+release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -55,7 +55,7 @@ html_theme_options = {
         "Issues|https://github.com/fortunestreetmodding/cs-board-tools/issues",
     ]),
     "style": "purple",
-    "repository_name": "fortunestreetmodding/csmm-qt",
-    "repository_url": "https://github.com/fortunestreetmodding/csmm-qt",
+    "repository_name": "fortunestreetmodding/cs-board-tools",
+    "repository_url": "https://github.com/fortunestreetmodding/cs-board-tools",
     "monospace_font": "luminari",
 }
