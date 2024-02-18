@@ -62,7 +62,12 @@ def display(directory: str, file: str):
     """
     Used to display information from a Fortune Avenue-compatible
     .frb file, a Custom Street Map Manager-compatible .zip file,
-    or a Map Descriptor .yaml file. Prints the data to CLI.
+    or a Map Descriptor .yaml file. Nicely formats and prints the
+    data to your terminal.
+
+    Examples:
+    * cs-board-tools display -d /path/to/board_directory/
+    * cs-board-tools display -f BoardName.zip
 
     :param directory: (-d or --directory) A directory name. "."
     works if your working directory is already the directory you
@@ -77,7 +82,7 @@ def display(directory: str, file: str):
     """
     print("\n        -{========================>")
     print(f"        -{{  cs-board-tools {__version__}  }}-")
-    print("        -{      CLI display       }-")
+    print("        -{     board display      }-")
     print("         <========================}-\n")
 
     bundles = []
@@ -86,7 +91,7 @@ def display(directory: str, file: str):
         files = [os.path.join(directory, d) for d in os.listdir(directory)]
         bundles = read_files(files)
         print_bundles(bundles)
-    if file:
+    elif file:
         if file.endswith(".frb"):  # if it's a solo .frb file
             frb = read_frb(file)
             print_frbs([frb])
@@ -99,6 +104,13 @@ def display(directory: str, file: str):
         else:
             bundles = read_zip(file)
             print_bundles(bundles)
+    else:
+        print(
+            "No file or directory was entered. \n"
+            "Please specify a directory with -d or --directory "
+            "or a file with -f or --file. \n"
+            "You can also show help with -h or --help."
+        )
 
 
 @click.command(short_help=validate_short_help_message)
@@ -108,7 +120,12 @@ def validate(directory: str, file: str):
     """
     Used to display validation data from a Fortune Avenue-compatible
     .frb file, a Custom Street Map Manager (CSMM)-compatible .zip file,
-    or a Map Descriptor .yaml file. Prints the data to CLI.
+    or a Map Descriptor .yaml file. Nicely formats and prints the
+    data to your terminal.
+
+    Examples:
+    * cs-board-tools validate -d /path/to/board_directory/
+    * cs-board-tools validate -f BoardName.zip
 
     :param directory: (-d or --directory) A directory name. "."
     works if your working directory is already the directory you
@@ -123,7 +140,7 @@ def validate(directory: str, file: str):
     """
     print("\n        -{========================>")
     print(f"        -{{  cs-board-tools {__version__}  }}-")
-    print("        -{     CLI validation     }-")
+    print("        -{    board validation    }-")
     print("         <========================}-\n")
 
     bundles = []
@@ -133,7 +150,7 @@ def validate(directory: str, file: str):
         bundles = read_files(files)
         result = validate_bundle(bundles=bundles)
         print_bundles_validation_result(results=result)
-    if file:
+    elif file:
         if file.endswith(".frb"):  # if it's a solo .frb file
             frb = read_frb(file)
             result = validate_board_file([frb])
@@ -151,7 +168,13 @@ def validate(directory: str, file: str):
 
             result = validate_bundle(bundles=bundles)
             print_bundles_validation_result(results=result)
-
+    else:
+        print(
+            "No file or directory was entered. \n"
+            "Please specify a directory with -d or --directory "
+            "or a file with -f or --file. \n"
+            "You can also show help with -h or --help."
+        )
 
 cs_board_tools.add_command(display)
 cs_board_tools.add_command(validate)
