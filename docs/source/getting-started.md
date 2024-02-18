@@ -9,8 +9,8 @@ Getting started with `cs-board-tools` is easy. Simply make sure Python 3.10 is i
 ```py
 pip install cs-board-tools
 ```
-## Loading a Map Bundle
-In its simplest form, loading a map bundle is as easy as passing a filename into a Python function.
+## Loading a Board Bundle
+In its simplest form, loading a board bundle is as easy as passing a filename into a Python function.
 ```py
 from cs_board_tools.io import read_zip
 
@@ -20,7 +20,7 @@ def load_zip_bundle():
     bundles = read_zip(filename)
     board_bundle = bundles[0]
 ```
-## Validating a Map Bundle
+## Validating a Board Bundle
 Then, with that board_bundle object from the previous step, all you have to do is pass it into the `validate_board_bundle` function to validate it. What you will get in return is a **ValidationResultBundle** object, containing all of the results of the tests.
 
 ```py
@@ -34,7 +34,7 @@ print(
 ```
 
 ## Usage from the CLI
-`cs-board-tools` can be used from the terminal to display information about Fortune Avenue-compatible `.frb` files, Map Descriptor `.yaml` files, or Map Bundles either via `.zip` archive files, or by reading in files from a directory. It has two main commands: `display` and `validate`, and they work the same regardless of the type of input file you are passing in.
+`cs-board-tools` can be used from the terminal to display information about Fortune Avenue-compatible `.frb` files, `.yaml` descriptor files, or Board Bundles either via `.zip` archive files, or by reading in files from a directory. It has two main commands: `display` and `validate`, and they work the same regardless of the type of input file you are passing in.
 
 ### Display Bundle from Directory
 ```bash

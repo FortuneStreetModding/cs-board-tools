@@ -1,12 +1,11 @@
 # Usage
+This library can be used in multiple ways. You can load `.frb` board files, `.yaml` descriptor files, and `.zip` bundle files respectively. You can also load bundles from a directory of files, and you can run validation tests on any or all of these files, as well.
 
-This library can be used in multiple ways. You can load `BoardFiles`, `MapDescriptors`, and `Bundles` from `.frb`, `.yaml`, and `.zip` files respectively. You can also validate bundle configurations as well.
+## Loading Boards
 
-## Loading Maps
+You can use this library to load CSMM-compatible board bundles, as well as Fortune Avenue-compatible `.frb` files, and CSMM-comatible`.yaml` descriptor files. This guide will walk you through all of them, so feel free to skip to the section most relevant to you.
 
-You can use this library to load CSMM-compatible board bundles, as well as solo Fortune Avenue `.frb` files, and solo Map Descriptor `.yaml` files. This guide will walk you through all four, so feel free to skip to the section most relevant to you.
-
-### How to Load a Map
+### How to Load a Board
 The method will differ slightly depending on the files available to you.
 
 #### .zip board bundle file
@@ -57,7 +56,7 @@ def reading_yaml():
 ```
 :::
 ::::
-When loading a `.yaml` Map Descriptor file, the object returned is a MapDescriptor object, rather than a full bundle. As such, the `read_yaml` function returns just that.
+When loading a `.yaml` descriptor file, the object returned is a MapDescriptor object, rather than a full bundle. As such, the `read_yaml` function returns just that.
 
 #### .frb file only
 ::::{tab-set}
@@ -76,11 +75,11 @@ def reading_frb():
 The `read_frb` function returns a BoardFile object, representing only the data that is stored in the `.frb` file directly.
 
 
-## Validating Maps
+## Validating Boards
 Validating boards is incredibly simple!
 
-### How to Validate a Map
-To validate a board, you must first load it. Please see the Loading Maps section for more information. Once you have your list of Bundles, you can pass them in for validation like so:
+### How to Validate a Board
+To validate a board, you must first load it. Please see the Loading Boards section for more information. Once you have your list of Bundles, you can pass them in for validation like so:
 ::::{tab-set}
 
 :::{tab-item} Python 3.10+
@@ -175,7 +174,7 @@ The next section contains charts showing in detail the attributes available in t
 
 
 ## CLI
-`cs-board-tools` can be used from the terminal to display information about Fortune Avenue-compatible `.frb` files, Map Descriptor `.yaml` files, or Map Bundles either via `.zip` archive files, or by reading in files from a directory. It has two main commands: `display` and `validate`, and they work the same regardless of the type of input file you are passing in.
+`cs-board-tools` can be used from the terminal to display information about Fortune Avenue-compatible `.frb` files, CSMM-compatible `.yaml` descriptor files, or Board Bundles either via `.zip` archive files, or by reading in files from a directory. It has two main commands: `display` and `validate`, and they work the same regardless of the type of input file you are passing in.
 
 ### Displaying
 ::::{tab-set}
@@ -192,7 +191,7 @@ cs-board-tools display -f SomeAwesomeBoard.frb
 :::
 :::{tab-item} yaml
 ```bash
-cs-board-tools display -f SomeAwesomeMapDescriptor.yaml
+cs-board-tools display -f SomeAwesomeBoardDescriptor.yaml
 ```
 :::
 :::{tab-item} zip
@@ -217,7 +216,7 @@ cs-board-tools validate -f SomeAwesomeBoard.frb
 :::
 :::{tab-item} yaml
 ```bash
-cs-board-tools validate -f SomeAwesomeMapDescriptor.yaml
+cs-board-tools validate -f SomeAwesomeBoardDescriptor.yaml
 ```
 :::
 :::{tab-item} zip
@@ -227,4 +226,4 @@ cs-board-tools validate -f SomeAwesomeBundle.zip
 :::
 ::::
 
-The information returned will differ depending on what type of file was passed in. For example, a screenshot test cannot be performed against a solo .frb file as the information needed to run that test lives in the MapDescriptor. Only Bundles are able to display the full range of information, and perform all validation tests, as they contain the .frb, the .yaml, and the other related files too.
+The information returned will differ depending on what type of file was passed in. For example, a screenshot test cannot be performed against a solo .frb file as the information needed to run that test lives in the `.yaml` descriptor file. Only Bundles are able to display the full range of information, and perform all validation tests, as they contain the .frb, the .yaml, and the other related files too.
