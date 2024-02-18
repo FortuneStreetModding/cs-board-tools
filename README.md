@@ -11,7 +11,7 @@ This repository contains tools that are designed to allow Python developers to e
 * [Usage as a Library](#usage-as-a-library)
   * [Loading a Board Bundle](#loading-a-board-bundle)
   * [Validating a Board Bundle](#validating-a-board-bundle)
-* [Usage from the CLI](#usage-from-the-cli)
+* [Usage from the Terminal](#usage-from-the-terminal)
   * [Display from Directory](#display-from-directory)
   * [Validate from File](#validate-from-file)
 * [Further Reading](#further-reading)
@@ -49,7 +49,7 @@ print(
 )
 ```
 
-## Usage from the CLI
+## Usage from the Terminal
 `cs-board-tools` can be used from the terminal to display information about Fortune Avenue-compatible `.frb` files, Map Descriptor `.yaml` files, or Board Bundles either via `.zip` archive files, or by reading in files from a directory. It has two main commands: `display` and `validate`, and they work the same regardless of the type of input file you are passing in.
 
 ### Display from Directory

@@ -1,5 +1,5 @@
 """This module contains code which handles displaying and validating
-MapDescriptor .yaml files from the CLI.
+MapDescriptor .yaml files from the terminal.
 """
 import sys
 from prettytable import PrettyTable
@@ -9,7 +9,7 @@ from ..schema.validation import ValidationResultBundle
 
 
 def print_descriptors(descriptors: list[MapDescriptor]):
-    """Prints a list of MapDescriptors to CLI. Uses PrettyTable to
+    """Prints a list of MapDescriptors to the terminal. Uses PrettyTable to
     print nicely-formatted ASCII tables.
 
     Args:
@@ -57,7 +57,7 @@ def print_descriptors(descriptors: list[MapDescriptor]):
 
 
 def print_descriptors_validation_result(results: ValidationResultBundle):
-    """Prints data from a ValidationResultBundle object to CLI, when that
+    """Prints data from a ValidationResultBundle object to the terminal, when that
     object contains results from a descriptor-only validation test.
 
     Args:

@@ -33,7 +33,7 @@ print(
 )
 ```
 
-## Usage from the CLI
+## Usage from the Terminal
 `cs-board-tools` can be used from the terminal to display information about Fortune Avenue-compatible `.frb` files, `.yaml` descriptor files, or Board Bundles either via `.zip` archive files, or by reading in files from a directory. It has two main commands: `display` and `validate`, and they work the same regardless of the type of input file you are passing in.
 
 ### Display Bundle from Directory
@@ -46,7 +46,7 @@ cs-board-tools display -d .
 cs-board-tools validate -f SomeAwesomeBundle.zip
 ```
 
-These work vice-versa as well: you can validate bundles from directory, just as you can display bundles from file.
+These work the other way around as well: you can validate bundles from directory, just as you can display bundles from file.
 
 ## Further Reading
 

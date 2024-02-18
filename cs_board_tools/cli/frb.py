@@ -1,5 +1,5 @@
 """These are functions which handle displaying and validating
-Fortune Avenue-compatible .frb files from the CLI.
+Fortune Avenue-compatible .frb files from the terminal.
 """
 import sys
 from prettytable import PrettyTable
@@ -9,7 +9,7 @@ from ..schema.validation import ValidationResultBundle
 
 
 def print_frbs(frbs: list[BoardFile]):
-    """Prints a list of Fortune Avenue-compatible .frb files to CLI.
+    """Prints a list of Fortune Avenue-compatible .frb files to the terminal.
     Uses PrettyTable to print nicely-formatted ASCII tables.
 
     Args:
@@ -45,7 +45,7 @@ def print_frbs(frbs: list[BoardFile]):
 
 
 def print_frbs_validation_result(results: ValidationResultBundle):
-    """Prints data from a ValidationResultBundle object to CLI, when that
+    """Prints data from a ValidationResultBundle object to the terminal, when that
     object contains results from an frb-only validation test.
 
     Args:

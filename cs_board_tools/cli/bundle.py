@@ -1,5 +1,5 @@
 """These functions handle displaying and validating Board Bundles -- either
-.zip file archives or full directories of files directly -- from the CLI.
+.zip file archives or full directories of files directly -- from the terminal.
 """
 import sys
 from prettytable import PrettyTable
@@ -10,7 +10,7 @@ from ..schema.validation import ValidationResultBundle
 
 def print_bundles(bundles: list[Bundle]):
     """
-    Prints a list of Bundles to CLI. Uses PrettyTable to
+    Prints a list of Bundles to the terminal. Uses PrettyTable to
     print nicely-formatted ASCII tables.
 
     :param bundles: The Bundles you would like to print.
@@ -70,7 +70,7 @@ def print_bundles(bundles: list[Bundle]):
 
 def print_bundles_validation_result(results: ValidationResultBundle):
     """
-    Prints data from a ValidationResultBundle object to CLI.
+    Prints data from a ValidationResultBundle object to the terminal.
 
     :param results: The results you would like to print.
     :type results: ValidationResultBundle

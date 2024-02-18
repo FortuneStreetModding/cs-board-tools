@@ -1,7 +1,7 @@
 # cs-board-tools | CLI
 
 ## Summary
-This module holds code to support invoking both loading (display) and validating boards via the CLI. The following different types of inputs can be used:
+This module holds code to support invoking both loading (display) and validating boards via the terminal. The following different types of inputs can be used:
 
 * solo frbs
 * solo yaml board descriptors
