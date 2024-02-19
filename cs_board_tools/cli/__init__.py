@@ -25,6 +25,7 @@ from cs_board_tools.io import (
     read_yaml,
     read_zip
 )
+from cs_board_tools.utilities import get_files_recursively
 from cs_board_tools.validation import (
     validate_bundle,
     validate_board_file,
@@ -147,7 +148,7 @@ def validate(directory: str, file: str, gdrive_api_key=None):
     bundles = []
 
     if directory:
-        files = [os.path.join(directory, d) for d in os.listdir(directory)]
+        files = get_files_recursively(directory)
         bundles = read_files(files)
         result = validate_bundle(bundles=bundles, gdrive_api_key=gdrive_api_key)
         print_bundles_validation_result(results=result)

@@ -6,7 +6,7 @@ incorrectly outside of that use-case.
 """
 
 from .collections import remove_null_entries_from_dict
-from .filesystem import cleanup
+from .filesystem import cleanup, get_files_recursively
 from .yaml import load_yaml, load_yaml_schema
 from .zip import extract_zip_file
 

@@ -78,6 +78,7 @@ def get_file_metadata(url: str, gdrive_api_key: str) -> FileMetadata:
                 "?alt=json&fields=size,modifiedTime"
                 f"&key={gdrive_api_key}"
             )
+
             data = res.json()
 
             if "error" in data:
@@ -87,7 +88,10 @@ def get_file_metadata(url: str, gdrive_api_key: str) -> FileMetadata:
                 )
 
                 if "message" in data["error"]:
-                    error_messages.append(data["error"]["message"])
+                    error_messages.append(
+                        f"{error} ",
+                        f"(Error from server: {data['error']['message']})"
+                    )
                 else:
                     error_messages.append(error)
             else:

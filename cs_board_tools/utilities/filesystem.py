@@ -5,6 +5,22 @@ temporary files.
 import os
 
 
+def get_files_recursively(directory):
+    """
+    This function takes a directory, and adds all of its files to an array,
+    then traverses through any subdirectories and adds those files too. Once
+    complete, it returns that array.
+
+    :param directory: A directory to search.
+    :type directory: Path
+    """
+    files = [os.path.join(directory, d) for d in os.listdir(directory)]
+    for obj in files:
+        if os.path.isdir(obj):
+            files.extend(get_files_recursively(os.path.join(directory, obj)))
+    return files
+
+
 def remove_temp_directories(directories):
     """
     This function empties and removes all the directories passed
