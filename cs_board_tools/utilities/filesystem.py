@@ -17,7 +17,7 @@ def get_files_recursively(directory):
     files = [os.path.join(directory, d) for d in os.listdir(directory)]
     for obj in files:
         if os.path.isdir(obj):
-            files.extend(get_files_recursively(os.path.join(directory, obj)))
+            files.extend(get_files_recursively(obj))
     return files
 
 
