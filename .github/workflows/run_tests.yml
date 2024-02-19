@@ -5,7 +5,7 @@ on:
     branches: ["nikkums/development"] # for now
 
 jobs:
-  build:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
