@@ -58,7 +58,7 @@ def cs_board_tools(ctx: click.Context):
 @click.command(short_help=display_short_help_message)
 @click.option('-d', '--directory', type=str, help=directory_flag_help_message)
 @click.option('-f', '--file', type=str, help=file_flag_help_message)
-def display(directory: str, file: str):
+def display(directory: str, file: str, gdrive_api_key=None):
     """
     Used to display information from a Fortune Avenue-compatible
     .frb file, a Custom Street Map Manager-compatible .zip file,
@@ -114,9 +114,10 @@ def display(directory: str, file: str):
 
 
 @click.command(short_help=validate_short_help_message)
+@click.option('-g', '--gdrive-api-key', is_flag=False, flag_value=None, default=None)
 @click.option('-d', '--directory', type=str, help=directory_flag_help_message)
 @click.option('-f', '--file', type=str, help=file_flag_help_message)
-def validate(directory: str, file: str):
+def validate(directory: str, file: str, gdrive_api_key=None):
     """
     Used to display validation data from a Fortune Avenue-compatible
     .frb file, a Custom Street Map Manager (CSMM)-compatible .zip file,
@@ -148,7 +149,7 @@ def validate(directory: str, file: str):
     if directory:
         files = [os.path.join(directory, d) for d in os.listdir(directory)]
         bundles = read_files(files)
-        result = validate_bundle(bundles=bundles)
+        result = validate_bundle(bundles=bundles, gdrive_api_key=gdrive_api_key)
         print_bundles_validation_result(results=result)
     elif file:
         if file.endswith(".frb"):  # if it's a solo .frb file
@@ -157,7 +158,7 @@ def validate(directory: str, file: str):
             print_frbs_validation_result(results=result)
         elif file.endswith(".yaml"):  # if it's a solo .yaml file
             descriptor = read_yaml(file)
-            result = validate_descriptor([descriptor])
+            result = validate_descriptor([descriptor], gdrive_api_key)
             print_descriptors_validation_result(results=result)
         # if it's anything else, it's a bundle. Handle accordingly:
         else:
@@ -166,7 +167,7 @@ def validate(directory: str, file: str):
                 print("Please provide a valid input archive.")
                 sys.exit(1)
 
-            result = validate_bundle(bundles=bundles)
+            result = validate_bundle(bundles=bundles, gdrive_api_key=gdrive_api_key)
             print_bundles_validation_result(results=result)
     else:
         print(

@@ -89,7 +89,7 @@ def validate_bundle(
     for b in bundles:
         reset_errors_and_warnings()
         board_result = ValidationResult()
-        board_result.board_name = b.name
+        board_result.board_name = b.name.en
 
         board_result.naming = check_naming_convention(
             bundle=b,
@@ -312,7 +312,7 @@ def validate_descriptor(
     for d in descriptors:
         reset_errors_and_warnings()
         board_result = ValidationResult()
-        board_result.board_name = d.name
+        board_result.board_name = d.name.en
 
         board_result.music_download = check_music_download(
             descriptor=d,

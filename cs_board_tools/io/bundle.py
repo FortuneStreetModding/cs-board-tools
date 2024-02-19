@@ -92,41 +92,30 @@ def read_files(files: list[Path]) -> list[Bundle]:
     for y in yaml_filenames:
         bundle = Bundle()
         bundle.descriptor = read_yaml(y)
+        bundle_path = y.rsplit("/", 1)[0]
 
         bundle.authors = bundle.descriptor.authors
         bundle.background = bundle.descriptor.background
 
-        bundle.filenames.brstm = cleanup_filenames(brstm_filenames)
-        bundle.filenames.cmpres = cleanup_filenames(cmpres_filenames)
-        bundle.filenames.frb = cleanup_filenames(frb_filenames)
-        bundle.filenames.png = cleanup_filenames(png_filenames)
-        bundle.filenames.webp = cleanup_filenames(webp_filenames)
-        bundle.filenames.yaml = cleanup_filenames(yaml_filenames)
+        screenshot_paths = [f for f in webp_filenames if f"{bundle_path}/" in f]
+
+        bundle.filenames.brstm = cleanup_filenames([f for f in brstm_filenames if f"{bundle_path}/" in f])
+        bundle.filenames.cmpres = cleanup_filenames([f for f in cmpres_filenames if f"{bundle_path}/" in f])
+        bundle.filenames.frb = cleanup_filenames([f for f in frb_filenames if f"{bundle_path}/" in f])
+        bundle.filenames.png = cleanup_filenames([f for f in png_filenames if f"{bundle_path}/" in f])
+        bundle.filenames.webp = cleanup_filenames(screenshot_paths)
+        bundle.filenames.yaml = cleanup_filenames([f for f in yaml_filenames if f"{bundle_path}/" in f])
 
         bundle.icon = bundle.descriptor.icon
         bundle.music = bundle.descriptor.music
         bundle.name = bundle.descriptor.name
 
         board_files = []
-        frb_filenames = []
-        screenshots = []
-
-        for f in bundle.descriptor.frbs:
-
-            for file in files:
-                if f in file and "frb" in file:
-                    frb_filenames.append(f"{file}")
-            # reading screenshots
-            for w in webp_filenames:
-                if f in w:
-                    screenshots.append(w)
-
-        # reading board files
-        for filename in frb_filenames:
-            board_files.append(read_frb(filename))
+        for f in bundle.filenames.frb:
+            board_files.append(read_frb(f"{bundle_path}/{f}"))
 
         bundle.frbs = board_files
-        bundle.screenshots = screenshots
+        bundle.screenshots = screenshot_paths
 
         bundles.append(bundle)
 

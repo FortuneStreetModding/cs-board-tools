@@ -88,8 +88,8 @@ def get_file_metadata(url: str, gdrive_api_key: str) -> FileMetadata:
 
                 if "message" in data["error"]:
                     error_messages.append(data["error"]["message"])
-
-                error_messages.append(error)
+                else:
+                    error_messages.append(error)
             else:
                 size = int(data["size"])
                 lastModifiedStr = data["modifiedTime"]
@@ -126,15 +126,12 @@ def get_file_metadata(url: str, gdrive_api_key: str) -> FileMetadata:
             warnings=warning_messages,
             data=metadata
         )
-
-        error_messages.clear()
-        informational_messages.clear()
-        warning_messages.clear()
-
         return results
     except IOError as e:
         print(e, file=sys.stderr)
         return
     finally:
         error_messages.clear()
+        informational_messages.clear()
+        warning_messages.clear()
         sess.close()

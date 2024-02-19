@@ -151,10 +151,9 @@ def check_music_download(
 
     if len(mirrors) < 2:
         informational_messages.append(
-            "Boards that require downloading custom music, if "
-            "intended to be added to CSWT, should define at "
-            "least two download mirrors. Currently, only one "
-            "is defined."
+            "Boards that require downloading custom music should "
+            "define at least two download mirrors. Currently, only "
+            "one is defined."
         )
     if len(mirrors) > 1:
         mirrorFileSizeDict = {}
@@ -173,16 +172,12 @@ def check_music_download(
                 fileMetadata = metadata_results.data
                 fileSize = fileMetadata.file_size
                 mirrorFileSizeDict[mirror] = fileSize
-                if mirror != mirrors[0]:
-                    if mirrors[0] in mirrorFileSizeDict:
-                        if mirrorFileSizeDict[mirrors[0]] != fileSize:
-                            handle_file_size_error(mirrorFileSizeDict)
-
-            elif metadata_results.status == "ERROR":
-                if metadata_results.error_messages:
-                    error_messages.extend(
-                        metadata_results.error_messages
-                    )
+                if mirror == mirrors[0]:
+                    continue
+                if mirrors[0] not in mirrorFileSizeDict:
+                    continue
+                if mirrorFileSizeDict[mirrors[0]] != fileSize:
+                    handle_file_size_error(mirrorFileSizeDict)
 
     results = build_results_object(
         errors=error_messages,

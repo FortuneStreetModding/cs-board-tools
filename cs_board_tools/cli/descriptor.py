@@ -77,6 +77,8 @@ def print_descriptors_validation_result(results: ValidationResultBundle):
     informational_messages = []
     warning_messages = []
 
+    gdrive_api_key_missing = False
+    gdrive_message = ""
     for r in results.boards:
         b_table = PrettyTable()
         b_table.title = f"Validation Results for {r.board_name}"
@@ -87,14 +89,35 @@ def print_descriptors_validation_result(results: ValidationResultBundle):
         b_table.align["Attribute"] = "r"
         b_table.align["Value or Count"] = "l"
 
+        # If the Google Drive API key is missing, it's going
+        # have an informational message in _each_ board. So
+        # if you validate or display 49 boards, you'll get
+        # 49 messages. For the purposes of the terminal output,
+        # we'd like to only print this message once. So this
+        # section focuses on making that happen.
+
+        informational = []
+        for message in r.informational_messages:
+            if "Music Download test" in message:
+                if not gdrive_api_key_missing:
+                    gdrive_api_key_missing = True
+                    gdrive_message = message
+            else:
+                informational.append(message)
+
         errs = [f"({r.board_name}) {e}" for e in r.error_messages]
-        info = [f"({r.board_name}) {i}" for i in r.informational_messages]
+        info = [f"({r.board_name}) {i}" for i in informational]
         warn = [f"({r.board_name}) {w}" for w in r.warning_messages]
         error_messages.extend(errs)
         informational_messages.extend(info)
         warning_messages.extend(warn)
 
         print(b_table)
+
+    # Append the gdrive message, if the API key is missing
+    if gdrive_api_key_missing:
+        informational_messages.append(f"(General) {gdrive_message}")
+
     if results.issue_count == 0:
         print("No issues were found.")
     else:
