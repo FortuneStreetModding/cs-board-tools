@@ -21,8 +21,8 @@ This repository contains tools that are designed to allow Python developers to e
 
 ## Installation
 `cs-board-tools` can be installed via pip:
-```py
-pip install cs-board-tools
+```bash
+pip install git+https://github.com/FortuneStreetModding/cs-board-tools
 ```
 ## Usage as a Library
 ### Loading a Board Bundle

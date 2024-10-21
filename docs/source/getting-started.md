@@ -1,14 +1,32 @@
 # Getting Started
-Getting started with `cs-board-tools` is easy. Simply make sure Python 3.10 is installed, then install cs-board-tools with pip, and you're ready to go!
+Getting started with `cs-board-tools` is easy. Simply make sure Python 3.10 or newer is installed, then install `cs-board-tools` with pip, and you're ready to go!
 
 ## Prerequisites
 `cs-board-tools` requires Python 3.10 or higher.
 
-## Installation
-`cs-board-tools` can be installed via pip:
-```py
-pip install cs-board-tools
+### Installation
+`cs-board-tools` can be installed via pip in the terminal, or it can be specified in your project's `pyproject.toml` or `requirements.txt` file.
+::::{tab-set}
+
+:::{tab-item} via pip
+```bash
+pip install git+https://github.com/FortuneStreetModding/cs-board-tools
 ```
+:::
+:::{tab-item} via pyproject.toml
+```toml
+dependencies = [
+  'cs-board-tools @ git+https://github.com/FortuneStreetModding/cs-board-tools.git'
+]
+```
+:::
+:::{tab-item} via requirements.txt
+```bash
+cs-board-tools @ git+https://github.com/FortuneStreetModding/cs-board-tools@main
+```
+:::
+::::
+
 ## Loading a Bundle
 In its simplest form, loading a bundle is as easy as passing a filename into a Python function.
 ```py
