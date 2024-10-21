@@ -20,7 +20,7 @@ This repository contains tools that are designed to allow Python developers to e
 `cs-board-tools` requires Python 3.10 or higher.
 
 ## Installation
-### For use in the CLI/Terminal
+### For use in the terminal
 `cs-board-tools` can be installed via pip for use in the terminal:
 ```bash
 pip install git+https://github.com/FortuneStreetModding/cs-board-tools
