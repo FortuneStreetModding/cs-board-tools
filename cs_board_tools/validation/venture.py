@@ -100,14 +100,14 @@ def check_venture_cards(bundle: Bundle, skip: bool = False, skip_warnings: bool 
     :type bundle: Bundle
 
     :param skip: If set to True, the check will be skipped, but a
-    valid resultobject with no messages and SKIPPED as its
-    status will still be returned.
+        valid resultobject with no messages and SKIPPED as its
+        status will still be returned.
     :type skip: bool
 
     :param skip_warnings: If set to True, the checks that return
-    Warnings will be skipped, but a valid resultobject with
-    no messages and SKIPPED as its status will still be
-    returned.
+        Warnings will be skipped, but a valid resultobject with
+        no messages and SKIPPED as its status will still be
+        returned.
     :type skip: bool
 
     :return: A CheckResult object containing the check status as

@@ -263,7 +263,7 @@ def check_board_configuration(descriptor: MapDescriptor = None, frbs: list[Board
     :type skip: bool, optional
 
     :param skip_warnings: If set, skips tests resulting in
-    "Warning" messages.
+        "Warning" messages.
     :type skip_warnings: bool, optional
 
     :return: A CheckResult object containing the check status as

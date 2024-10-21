@@ -86,16 +86,16 @@ def check_naming_convention(bundle: Bundle, skip: bool = False, skip_warnings: b
     :type bundle: cs_board_tools.schema.bundle.Bundle
 
     :param skip: If set to True, the check will be skipped, but a
-    valid result object with no messages and SKIPPED as its
-    status will still be returned.
+        valid result object with no messages and SKIPPED as its
+        status will still be returned.
     :type skip: bool
 
     :param skip_warnings: If set, skips tests resulting in
-    "Warning" messages.
+        "Warning" messages.
     :type skip_warnings: bool, optional
 
     :return: A CheckResult object containing the check status as
-    well as any messages and additional data.
+        well as any messages and additional data.
     :rtype: CheckResult
     """
     if skip:

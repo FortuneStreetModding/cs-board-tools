@@ -90,16 +90,16 @@ def check_consistency(bundle: Bundle, skip: bool, skip_warnings: bool = False) -
     :type bundle: Bundle
 
     :param skip: If set to True, the check will be skipped, but a
-    valid resultobject with no messages and SKIPPED as its
-    status will still be returned.
+        valid resultobject with no messages and SKIPPED as its
+        status will still be returned.
     :type skip: bool
 
     :param skip_warnings: If set, skips tests resulting in
-    "Warning" messages.
+        "Warning" messages.
     :type skip_warnings: bool, optional
 
     :return: A CheckResult object containing the check status as
-    well as any messages and additional data.
+        well as any messages and additional data.
     :rtype: CheckResult
     """
     if skip:
