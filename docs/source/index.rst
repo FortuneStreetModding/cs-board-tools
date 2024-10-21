@@ -28,15 +28,6 @@ What would you like to do?
 
    Validate a board to ensure it meets Custom Street standards. It's no fun when someone's game crashes due to a misconfiguration.
 
-.. card:: Edit a Board (Coming soon!)
-
-   Soon you will be able to generate new Bundles with this library, as well as edit existing Bundles. Those features are stretch goals of this library, however, and are planned to release in a later update. Stay tuned!
-
-.. card:: Check the Roadmap
-   :link: ./roadmap.html
-
-   Who knows what the future will hold? Well, sometimes it's nice to have a vague idea.
-
 .. toctree::
    :maxdepth: 4
    :caption: Contents:
