@@ -150,8 +150,9 @@ The next section contains charts showing in detail the attributes available in t
 | issue_count            |          int           | (errors + warnings)                                           |
 | success_count          |          int           | Number of successful tasks.                                   |
 | total_count            |          int           | Total tasks. (successful and not)                             |
+| board_configuration    |      CheckResult       | The results of the Board Configuration checks.                |
 | consistency            |      CheckResult       | The results of the frb/yaml consistency check.                |
-| door                   |      CheckResult       | The results of the doors and dice check.                      |
+| icon                   |      CheckResult       | The results of the Board Icon check.
 | max_paths              |      CheckResult       | The results of the max paths check.                           |
 | music_download         |      CheckResult       | The results of the music download check.                      |
 | naming                 |      CheckResult       | The results of the naming convention check.                   |
@@ -166,11 +167,11 @@ The next section contains charts showing in detail the attributes available in t
 
 |  attribute             | type      |  description                                                                                        |
 |------------------------|-----------|-----------------------------------------------------------------------------------------------------|
+| data                   | any       | Can store anything you would like. Currently only used by the Max Paths check to return that value. |
 | status                 | str       | `OK`, `WARNING`, `ERROR`, or `SKIPPED`                                                              |
 | error_messages         | list[str] | A list of `error` messages.                                                                         |
 | informational_messages | list[str] | A list of `informational` messages.                                                                 |
 | warning_messages       | list[str] | A list of `warning` messages.                                                                       |
-| data                   | any       | Can store anything you would like. Currently only used by the Max Paths check to return that value. |
 
 
 ## CLI

@@ -17,8 +17,8 @@ class CheckResult:
     sort of data to be passed back; and three lists of strings to hold
     error, informational, and warning messages, respectively.
     """
-    status: str = field(default="SKIPPED")
     data: Any = field(default="")
+    status: str = field(default="SKIPPED")
     error_messages: list[str] = field(default_factory=list)
     informational_messages: list[str] = field(default_factory=list)
     warning_messages: list[str] = field(default_factory=list)
