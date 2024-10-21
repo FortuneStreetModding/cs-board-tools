@@ -115,10 +115,30 @@ def display(directory: str, file: str, gdrive_api_key=None):
 
 
 @click.command(short_help=validate_short_help_message)
+@click.option('-sbc', '--skip-board-configuration-test', is_flag=True, flag_value=True, default=False)
+@click.option('-sct', '--skip-consistency-test', is_flag=True, flag_value=True, default=False)
+@click.option('-smt', '--skip-icon-test', is_flag=True, flag_value=True, default=False)
+@click.option('-spt', '--skip-max-paths-test', is_flag=True, flag_value=True, default=False)
+@click.option('-sdt', '--skip-music-download-test', is_flag=True, flag_value=True, default=False)
+@click.option('-snt', '--skip-naming-convention-test', is_flag=True, flag_value=True, default=False)
+@click.option('-sst', '--skip-screenshots-test', is_flag=True, flag_value=True, default=False)
+@click.option('-svt', '--skip-venture-cards-test', is_flag=True, flag_value=True, default=False)
+@click.option('-sw', '--skip-warnings', is_flag=True, flag_value=True, default=False)
 @click.option('-g', '--gdrive-api-key', is_flag=False, flag_value=None, default=None)
 @click.option('-d', '--directory', type=str, help=directory_flag_help_message)
 @click.option('-f', '--file', type=str, help=file_flag_help_message)
-def validate(directory: str, file: str, gdrive_api_key=None):
+def validate(directory: str,
+             file: str,
+             gdrive_api_key: str = None,
+             skip_board_configuration_test: bool = False,
+             skip_consistency_test: bool = False,
+             skip_icon_test: bool = False,
+             skip_max_paths_test: bool = False,
+             skip_music_download_test: bool = False,
+             skip_naming_convention_test: bool = False,
+             skip_screenshots_test: bool = False,
+             skip_venture_cards_test: bool = False,
+             skip_warnings: bool = False):
     """
     Used to display validation data from a Fortune Avenue-compatible
     .frb file, a Custom Street Map Manager (CSMM)-compatible .zip file,
@@ -132,13 +152,45 @@ def validate(directory: str, file: str, gdrive_api_key=None):
     :param directory: (-d or --directory) A directory name. "."
     works if your working directory is already the directory you
     want to check.
-
     :type directory: str, optional
 
     :param file: (-f or --file) A file name. "file.zip" works if
     file.zip is in your current working directory.
-
     :type file: str, optional
+
+    :param gdrive-api-key: An API key for Google Drive. If you
+    would prefer, you can set the $GDRIVE_API_KEY environment
+    variable instead. (e.g. `export GDRIVE_API_KEY=value`)
+    :type gdrive-api-key: str, optional
+
+    :param skip_board_configuration_test: If set, skips the Board
+    Configuration tests.
+    :type skip_board_configuration_test: bool, optional
+
+    :param skip-consistency-test: If set, skips the Board Consistency
+    tests.
+    :type skip-consistency-test: bool, optional
+
+    :param skip-icon-test: If set, skips the Icon tests.
+    :type skip-icon-test: bool, optional
+
+    :param skip-max-paths-test: If set, skips the Max Paths tests.
+    :type skip-max-paths-test: bool, optional
+
+    :param skip_naming_convention_test: If set, skips the Naming
+    Convention tests.
+    :type skip_naming_convention_test: bool, optional
+
+    :param skip_screenshots_test: If set, skips the Screenshot tests.
+    :type skip_screenshots_test: bool, optional
+
+    :param skip-venture-cards-test: If set, skips the Venture
+    Card tests.
+    :type skip-venture-cards-test: bool, optional
+
+    :param skip-warnings: If set, skips tests resulting in
+    "Warning" messages.
+    :type skip-warnings: bool, optional
     """
     print("\n        -{========================>")
     print(f"        -{{  cs-board-tools {__version__}  }}-")
@@ -147,10 +199,25 @@ def validate(directory: str, file: str, gdrive_api_key=None):
 
     bundles = []
 
+    if gdrive_api_key is None:
+        gdrive_api_key = os.environ.get("GDRIVE_API_KEY")
+
     if directory:
         files = get_files_recursively(directory)
         bundles = read_files(files)
-        result = validate_bundle(bundles=bundles, gdrive_api_key=gdrive_api_key)
+        result = validate_bundle(
+            bundles=bundles,
+            gdrive_api_key=gdrive_api_key,
+            skip_board_configuration_test=skip_board_configuration_test,
+            skip_consistency_test=skip_consistency_test,
+            skip_icon_test=skip_icon_test,
+            skip_max_paths_test=skip_max_paths_test,
+            skip_music_download_test=skip_music_download_test,
+            skip_naming_convention_test=skip_naming_convention_test,
+            skip_screenshots_test=skip_screenshots_test,
+            skip_venture_cards_test=skip_venture_cards_test,
+            skip_warnings=skip_warnings
+        )
         print_bundles_validation_result(results=result)
     elif file:
         if file.endswith(".frb"):  # if it's a solo .frb file
@@ -168,7 +235,19 @@ def validate(directory: str, file: str, gdrive_api_key=None):
                 print("Please provide a valid input archive.")
                 sys.exit(1)
 
-            result = validate_bundle(bundles=bundles, gdrive_api_key=gdrive_api_key)
+            result = validate_bundle(
+                bundles=bundles,
+                gdrive_api_key=gdrive_api_key,
+                skip_board_configuration_test=skip_board_configuration_test,
+                skip_consistency_test=skip_consistency_test,
+                skip_icon_test=skip_icon_test,
+                skip_max_paths_test=skip_max_paths_test,
+                skip_music_download_test=skip_music_download_test,
+                skip_naming_convention_test=skip_naming_convention_test,
+                skip_screenshots_test=skip_screenshots_test,
+                skip_venture_cards_test=skip_venture_cards_test,
+                skip_warnings=skip_warnings
+            )
             print_bundles_validation_result(results=result)
     else:
         print(

@@ -51,8 +51,9 @@ class ValidationResult:
     total_count: int = 0
 
     # results for specific checks
+    board_configuration: CheckResult = field(default_factory=CheckResult)
     consistency: CheckResult = field(default_factory=CheckResult)
-    door: CheckResult = field(default_factory=CheckResult)
+    icon: CheckResult = field(default_factory=CheckResult)
     max_paths: CheckResult = field(default_factory=CheckResult)
     music_download: CheckResult = field(default_factory=CheckResult)
     naming: CheckResult = field(default_factory=CheckResult)

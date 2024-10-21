@@ -98,8 +98,9 @@ def print_bundles_validation_result(results: ValidationResultBundle):
         b_table.field_names = ["Attribute", "Value or Count"]
         b_table.add_row(["Max Paths", r.paths])
         b_table.add_row(["---", "---"])
+        b_table.add_row(["Board Configuration", r.board_configuration.status])
         b_table.add_row(["Consistency", r.consistency.status])
-        b_table.add_row(["Doors and Dice", r.door.status])
+        b_table.add_row(["Icon", r.icon.status])
         b_table.add_row(["Max Paths", r.max_paths.status])
         b_table.add_row(["Music Download", r.music_download.status])
         b_table.add_row(["Naming Convention", r.naming.status])

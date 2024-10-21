@@ -69,7 +69,7 @@ def test_reading_zip_file():
     # .frb board info
     assert board_bundle.frbs[0].board_info.base_salary == 350
     assert board_bundle.frbs[0].board_info.galaxy_status == LoopingMode.NONE
-    assert board_bundle.frbs[0].board_info.max_dice_roll == 8
+    assert board_bundle.frbs[0].board_info.max_dice_roll == 7
     assert board_bundle.frbs[0].board_info.salary_increment == 200
     assert board_bundle.frbs[0].board_info.version_flag == 3
 

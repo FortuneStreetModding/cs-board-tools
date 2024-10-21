@@ -21,7 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-  'bytechomp ~= 0.3.0',
+  'bytechomp @ git+https://github.com/AndrewSpittlemeister/bytechomp.git',
   'click ~= 8.1.7',
   'jsonschema ~= 4.19.1',
   'prettytable ~= 3.9.0',

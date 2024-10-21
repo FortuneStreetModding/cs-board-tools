@@ -73,7 +73,7 @@ def print_frbs_validation_result(results: ValidationResultBundle):
         b_table.field_names = ["Attribute", "Value or Count"]
         b_table.add_row(["Max Paths", r.paths])
         b_table.add_row(["---", "---"])
-        b_table.add_row(["Doors and Dice", r.door.status])
+        b_table.add_row(["Board Configuration", r.board_configuration.status])
         b_table.add_row(["Max Paths", r.max_paths.status])
 
         b_table.align["Attribute"] = "r"

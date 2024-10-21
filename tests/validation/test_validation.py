@@ -10,9 +10,11 @@ def test_validation():
     )
     result = validate_bundle(bundles)
 
-    assert result.boards[0].door.status == "OK"
-    assert result.boards[0].consistency.status == "OK"
-    assert result.boards[0].venture.status == "OK"
-    assert result.boards[0].max_paths.status == "OK"
-    assert result.boards[0].screenshots.status == "OK"
-    assert result.issue_count == 0
+    for b in result.boards:
+        assert b.board_configuration.status == "OK"
+        assert b.consistency.status == "OK"
+        assert b.icon.status == "OK"
+        assert b.max_paths.status == "OK"
+        assert b.screenshots.status == "OK"
+        assert b.venture.status == "OK"
+        assert result.issue_count == 0

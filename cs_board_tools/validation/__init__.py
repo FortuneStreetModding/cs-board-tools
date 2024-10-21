@@ -5,7 +5,7 @@ compatiblility with Custom Street Map Manager (CSMM).
 """
 
 from .consistency import check_consistency
-from .doors import check_doors
+from .board import check_board_configuration
 from ..errors import (
     get_count,
     get_text,
@@ -13,7 +13,7 @@ from ..errors import (
     reset_errors_and_warnings,
 )
 
-from .filesystem import check_for_screenshots
+from .filesystem import check_for_screenshots, check_icon
 from .main import (
     validate_board_file,
     validate_bundle,
@@ -26,8 +26,9 @@ from .venture import check_venture_cards
 
 __all__ = [
     check_consistency.__name__,
-    check_doors.__name__,
+    check_board_configuration.__name__,
     check_for_screenshots.__name__,
+    check_icon.__name__,
     check_music_download.__name__,
     check_naming_convention.__name__,
     check_max_paths.__name__,

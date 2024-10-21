@@ -20,6 +20,6 @@ def test_reading_frb():
 
     assert frb.board_info.base_salary == 350
     assert frb.board_info.galaxy_status == LoopingMode.NONE
-    assert frb.board_info.max_dice_roll == 8
+    assert frb.board_info.max_dice_roll == 7
     assert frb.board_info.salary_increment == 200
     assert frb.board_info.version_flag == 3

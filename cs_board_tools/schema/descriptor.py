@@ -225,9 +225,8 @@ class MapDescriptor:
     venture_cards: VentureCardInfo = field(default_factory=VentureCardInfo)
 
     # District and Shop Names
-    capital_shop_names: ShopNames = field(default_factory=ShopNames)
-    shop_names: ShopNames = field(default_factory=ShopNames)
     district_names: DistrictNames = field(default_factory=DistrictNames)
+    shop_names: ShopNames = field(default_factory=ShopNames)
 
     # Extra Info
     notes: str = field(default="")
@@ -252,6 +251,9 @@ def build_map_descriptor_object(yaml_filename) -> MapDescriptor:
     results = load_yaml(yaml_filename, yaml_schema)
     d = MapDescriptor()
     yaml = results[0]
+    if not yaml:
+        d.yaml_validation_results = results[1]
+        return d
     d.yaml_validation_results = results[1]
     if "authors" in yaml:
         for a in yaml["authors"]:
@@ -279,16 +281,6 @@ def build_map_descriptor_object(yaml_filename) -> MapDescriptor:
             entry.version = c.get("version")
             entries.append(entry)
         d.changelog = entries
-
-    if "capitalShopNames" in yaml:
-        capital_shop_names = ShopNames()
-        capital_shop_names.en = yaml["capitalShopNames"].get("en")
-        capital_shop_names.de = yaml["capitalShopNames"].get("de")
-        capital_shop_names.fr = yaml["capitalShopNames"].get("fr")
-        capital_shop_names.it = yaml["capitalShopNames"].get("it")
-        capital_shop_names.jp = yaml["capitalShopNames"].get("jp")
-        capital_shop_names.es = yaml["capitalShopNames"].get("es")
-        d.capital_shop_names = capital_shop_names
 
     if "desc" in yaml:
         desc = Description()

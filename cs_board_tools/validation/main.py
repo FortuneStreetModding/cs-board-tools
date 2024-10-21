@@ -20,24 +20,37 @@ from cs_board_tools.schema.frb import BoardFile
 from cs_board_tools.schema.descriptor import MapDescriptor
 
 from .consistency import check_consistency
-from .doors import check_doors
-from .filesystem import check_for_screenshots
+from .board import check_board_configuration
+from .filesystem import check_for_screenshots, check_icon
 from .music import check_music_download
 from .naming import check_naming_convention
 from .paths import check_max_paths
 from .venture import check_venture_cards
 
 
+board_name_ignore_list = [
+    "Yoshi's Island", "Mario Circuit", "Peach's Castle", "Mario Stadium",
+    "Delfino Plaza", "Super Mario Bros.", "Bowser's Castle", "Starship Mario",
+    "Good Egg Galaxy", "Castle Trodain", "Ghost Ship", "Colossus",
+    "Mt Magmageddon", "Slimenia", "Robbin' Hood Ruins", "Alefgard",
+    "Alltrades Abbey", "The Observatory", "Colossus (Wii Easy)",
+    "Good Egg Galaxy (Wii Easy)", "Bowser's Castle (Wii Easy)", "Event Spiral",
+    "Shop Texture Test Board"
+]
+
+
 def validate_bundle(
     bundles: list[Bundle],
     gdrive_api_key=None,
     skip_consistency_test=False,
-    skip_doors_and_dice_test=False,
+    skip_board_configuration_test=False,
+    skip_icon_test=False,
     skip_max_paths_test=False,
     skip_music_download_test=False,
     skip_naming_convention_test=False,
     skip_screenshots_test=False,
-    skip_venture_cards_test=False
+    skip_venture_cards_test=False,
+    skip_warnings=False
 ) -> ValidationResultBundle:
     """
     The entry-point for validating board bundles.
@@ -54,17 +67,21 @@ def validate_bundle(
         will be skipped. Defaults to False.
     :type skip_consistency_test: bool, optional
 
-    :param skip_doors_and_dice_test: If set to True, the Doors and Dice
-        Check will be skipped. Defaults to False.
-    :type skip_doors_and_dice_test: bool, optional
+    :param skip_board_configuration_test: If set to True, the Board Configuration
+        Checks will be skipped. Defaults to False.
+    :type skip_board_configuration_test: bool, optional
 
-    :param skip_music_download_test: If set to True, the Music Download
-        Check will be skipped. Defaults to False.
-    :type skip_music_download_test: bool, optional
+    :param skip_mapicon_test: If set to True, the Map Icon Check will
+        be skipped. Defaults to False.
+    :type skip_max_paths_test: bool, optional
 
     :param skip_max_paths_test: If set to True, the Max Paths Check will
         be skipped. Defaults to False.
     :type skip_max_paths_test: bool, optional
+
+    :param skip_music_download_test: If set to True, the Music Download
+        Check will be skipped. Defaults to False.
+    :type skip_music_download_test: bool, optional
 
     :param skip_naming_convention_test: If set to True, the Naming
         Convention Check will be skipped. Defaults to False.
@@ -77,6 +94,10 @@ def validate_bundle(
     :param skip_venture_cards_test: If set to True, the Venture Card Checks
         will be skipped. Defaults to False.
     :type skip_venture_cards_test: bool, optional
+
+    :param skip_warnings: If set to True, the Venture Card Checks
+        that return Warning messages will be skipped. Defaults to False.
+    :type skip_warnings: bool, optional
 
     :return: A bundle containing the overall results, as well as a list
         containing objects that represent each of the individual results.
@@ -91,45 +112,69 @@ def validate_bundle(
         board_result = ValidationResult()
         board_result.board_name = b.name.en
 
-        board_result.naming = check_naming_convention(
-            bundle=b,
-            skip=skip_naming_convention_test
-        )
-        board_result.consistency = check_consistency(
-            bundle=b,
-            skip=skip_consistency_test
-        )
-
-        if len(b.frbs) == 0:
-            board_result.door = check_doors(frb="", skip=True)
+        if not b.name.en or b.name.en in board_name_ignore_list:
+            board_result.board_configuration = check_board_configuration(skip=True)
+            board_result.consistency = check_consistency(bundle=b, skip=True)
             board_result.max_paths = check_max_paths(frb="", skip=True)
-            board_result.paths = 0
+            board_result.icon = check_icon(bundle=b, skip=True)
+            board_result.music_download = check_music_download(skip=True)
+            board_result.naming = check_naming_convention(bundle=b, skip=True)
+            board_result.screenshots = check_for_screenshots(bundle=b, skip=True)
+            board_result.venture = check_venture_cards(bundle=b, skip=True, skip_warnings=skip_warnings)
         else:
-            board_result.door = check_doors(
-                frb=b.frbs[0],
-                skip=skip_doors_and_dice_test
+            board_result.naming = check_naming_convention(
+                bundle=b,
+                skip=skip_naming_convention_test,
+                skip_warnings=skip_warnings
             )
-            board_result.max_paths = check_max_paths(
-                frb=b.frbs[0],
-                skip=skip_max_paths_test
+            board_result.consistency = check_consistency(
+                bundle=b,
+                skip=skip_consistency_test,
+                skip_warnings=skip_warnings
             )
-            board_result.paths = int(board_result.max_paths.data)
 
-        board_result.music_download = check_music_download(
-            descriptor=b.descriptor,
-            skip=skip_music_download_test,
-            gdrive_api_key=gdrive_api_key
-        )
+            if len(b.frbs) == 0:
+                board_result.board_configuration = check_board_configuration(frb="", skip=True)
+                board_result.max_paths = check_max_paths(frb="", skip=True)
+                board_result.paths = 0
+            else:
+                board_result.board_configuration = check_board_configuration(
+                    frbs=b.frbs,
+                    descriptor=b.descriptor,
+                    skip=skip_board_configuration_test,
+                    skip_warnings=skip_warnings
+                )
+                board_result.max_paths = check_max_paths(
+                    frb=b.frbs[0],
+                    skip=skip_max_paths_test,
+                    skip_warnings=skip_warnings
+                )
+                board_result.paths = int(board_result.max_paths.data)
 
-        board_result.screenshots = check_for_screenshots(
-            bundle=b,
-            skip=skip_screenshots_test
-        )
+            board_result.icon = check_icon(
+                bundle=b,
+                skip=skip_icon_test,
+                skip_warnings=skip_warnings
+            )
 
-        board_result.venture = check_venture_cards(
-            bundle=b,
-            skip=skip_venture_cards_test
-        )
+            board_result.music_download = check_music_download(
+                descriptor=b.descriptor,
+                gdrive_api_key=gdrive_api_key,
+                skip=skip_music_download_test,
+                skip_warnings=skip_warnings
+            )
+
+            board_result.screenshots = check_for_screenshots(
+                bundle=b,
+                skip=skip_screenshots_test,
+                skip_warnings=skip_warnings
+            )
+
+            board_result.venture = check_venture_cards(
+                bundle=b,
+                skip=skip_venture_cards_test,
+                skip_warnings=skip_warnings
+            )
 
         # go ahead and process yaml validation results as
         # those get generated elsewhere, on load
@@ -190,7 +235,7 @@ def validate_bundle(
 
 def validate_board_file(
     frbs: list[BoardFile],
-    skip_doors_and_dice_test=False,
+    skip_board_configuration_tests=False,
     skip_max_paths_test=False,
 ) -> ValidationResultBundle:
     """
@@ -199,9 +244,9 @@ def validate_board_file(
     :param frbs: A list of BoardFile objects representing your .frb(s).
     :type frbs: list[BoardFile]
 
-    :param skip_doors_and_dice_test: If set to True, the Doors and Dice
-        Check will be skipped. Defaults to False.
-    :type skip_doors_and_dice_test: bool, optional
+    :param skip_board_configuration_tests: If set to True, the Board
+        Configuration checks will be skipped. Defaults to False.
+    :type skip_board_configuration_tests: bool, optional
 
     :param skip_max_paths_test: If set to True, the Max Paths Check will
         be skipped. Defaults to False.
@@ -217,11 +262,11 @@ def validate_board_file(
     for f in frbs:
         reset_errors_and_warnings()
         board_result = ValidationResult()
-        board_result.board_name.en = "Unknown .frb"
+        board_result.board_name = "Unknown .frb"
 
-        board_result.door = check_doors(
+        board_result.board_configuration = check_board_configuration(
             frb=f,
-            skip=skip_doors_and_dice_test
+            skip=skip_board_configuration_tests
         )
         board_result.max_paths = check_max_paths(
             frb=f,

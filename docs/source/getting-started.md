@@ -52,6 +52,4 @@ These work the other way around as well: you can validate bundles from directory
 
 For more information about using `cs-board-tools`, including further details about the data returned in the **ValidationResultBundle** object, please see the [Usage](#usage) section.
 
-For more information about the future of `cs-board-tools`, please see the [Roadmap](#roadmap) section.
-
 For a more traditional API-style documentation, please see the [API Reference](#api) section.

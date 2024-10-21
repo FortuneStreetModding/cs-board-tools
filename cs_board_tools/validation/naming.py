@@ -78,7 +78,7 @@ def file_exists(yaml_filename: str, filenames_of_same_type: list[str]) -> bool:
     # False = the file just isn't there at all.
 
 
-def check_naming_convention(bundle: Bundle, skip: bool):
+def check_naming_convention(bundle: Bundle, skip: bool = False, skip_warnings: bool = False):
     """
     Checks to see if files are named appropriately.
 
@@ -86,12 +86,16 @@ def check_naming_convention(bundle: Bundle, skip: bool):
     :type bundle: cs_board_tools.schema.bundle.Bundle
 
     :param skip: If set to True, the check will be skipped, but a
-        valid result object with no messages and SKIPPED as its
-        status will still be returned.
+    valid result object with no messages and SKIPPED as its
+    status will still be returned.
     :type skip: bool
 
+    :param skip_warnings: If set, skips tests resulting in
+    "Warning" messages.
+    :type skip_warnings: bool, optional
+
     :return: A CheckResult object containing the check status as
-        well as any messages and additional data.
+    well as any messages and additional data.
     :rtype: CheckResult
     """
     if skip:

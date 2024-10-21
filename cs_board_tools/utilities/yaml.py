@@ -12,18 +12,6 @@ informational_messages = []
 warning_messages = []
 
 
-def check_first_line(firstLine):
-    """This function checks the very first line of the .yaml
-        file to ensure it is "---"
-
-    :param firstLine: The first line of the .yaml file.
-    :type firstLine: str
-    """
-    global error_messages
-    if not firstLine == "---":
-        error_messages.append("YAML file first line must be ---")
-
-
 def load_yaml(yaml_filename, yaml_schema):
     """This function handles loading the .yaml file from disk.
 
@@ -39,12 +27,6 @@ def load_yaml(yaml_filename, yaml_schema):
     global warning_messages
     yamlContent = ""
     with open(yaml_filename, "r", encoding="utf8") as stream:
-        # check the first line before anything else, so we
-        # won't have to open the file twice. Then seek back
-        # to the top.
-        check_first_line(stream.readline().strip())
-        stream.seek(0x0)
-
         try:
             yaml=YAML(typ='safe')
             yamlContent = yaml.load(stream)
@@ -53,9 +35,10 @@ def load_yaml(yaml_filename, yaml_schema):
 
             jsonschema.validate(yamlContent, yaml_schema)
         except YAMLError as exc:
-            error_messages.append(str(exc))
+            split = str(exc).split("\n\nTo", 1)
+            error_messages.append("A yaml format error was encountered:\n" + split[0])
         except jsonschema.ValidationError as err:
-            error_messages.append(str(err))
+            error_messages.append(str(f"A yaml schema violation has been found: {err.message}"))
 
     results.error_messages = error_messages.copy()
     results.informational_messages = informational_messages.copy()

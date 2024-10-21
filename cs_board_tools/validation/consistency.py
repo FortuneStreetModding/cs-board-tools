@@ -80,7 +80,7 @@ def convert_galaxy_status(galaxyStatus) -> str:
     return loopingMode
 
 
-def check_consistency(bundle: Bundle, skip: bool) -> CheckResult:
+def check_consistency(bundle: Bundle, skip: bool, skip_warnings: bool = False) -> CheckResult:
     """
     Checks to ensure that values that are stored in both the
     Fortune Avenue-compatible .frb board file, and in the Map
@@ -90,12 +90,16 @@ def check_consistency(bundle: Bundle, skip: bool) -> CheckResult:
     :type bundle: Bundle
 
     :param skip: If set to True, the check will be skipped, but a
-        valid resultobject with no messages and SKIPPED as its
-        status will still be returned.
+    valid resultobject with no messages and SKIPPED as its
+    status will still be returned.
     :type skip: bool
 
+    :param skip_warnings: If set, skips tests resulting in
+    "Warning" messages.
+    :type skip_warnings: bool, optional
+
     :return: A CheckResult object containing the check status as
-        well as any messages and additional data.
+    well as any messages and additional data.
     :rtype: CheckResult
     """
     if skip:
