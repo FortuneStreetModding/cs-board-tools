@@ -25,17 +25,17 @@ This repository contains tools that are designed to allow Python developers to e
 ```bash
 pip install git+https://github.com/FortuneStreetModding/cs-board-tools
 ```
+
 ### For use in a Python project, as a library
 ...or it can be specified in your project's `pyproject.toml` or `requirements.txt` file if you are building a project that will use `cs-board-tools` as a library.
 
-`pyproject.toml`:
+#### pyproject.toml
 ```toml
 dependencies = [
   'cs-board-tools @ git+https://github.com/FortuneStreetModding/cs-board-tools.git'
 ]
 ```
-
-`requirements.txt`:
+#### requirements.txt
 ```bash
 cs-board-tools @ git+https://github.com/FortuneStreetModding/cs-board-tools@main
 ```
@@ -81,4 +81,4 @@ cs-board-tools validate -f SomeAwesomeBundle.zip
 These work vice-versa as well: you can validate bundles from directory, just as you can display bundles from file.
 
 ## Further Reading
-`cs-board-tools` has a rich set of documentation, including detailed installation and usage instructions, and a full, traditional API reference. You can find the docs here: [📚 cs-board-tools documentation](https://fortunestreetmodding.github.io/cs-board-tools/).
+`cs-board-tools` has a rich set of documentation, including detailed installation and usage instructions, and a full, traditional API reference. You can find the docs here: [📚 cs-board-tools documentation](https://fortunestreetmodding.github.io/cs-board-tools/home.html).
