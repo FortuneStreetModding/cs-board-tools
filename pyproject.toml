@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cs_board_tools"
+dynamic = [
+  "version"
+]
+authors = [
+  { name="Custom Street", email="customstreetmods@gmail.com" },
+]
+description = "A set of tools designed for working with Custom Street user content."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  'bytechomp @ git+https://github.com/AndrewSpittlemeister/bytechomp.git',
+  'click ~= 8.1.7',
+  'jsonschema ~= 4.19.1',
+  'prettytable ~= 3.9.0',
+  'ruamel.yaml ~= 0.18.5',
+  'requests ~= 2.31.0',
+]
+
+[project.scripts]
+cs-board-tools = "cs_board_tools.cli:cs_board_tools"
+
+[project.urls]
+"Homepage" = "https://github.com/FortuneStreetModding/cs-board-tools"
+"Bug Tracker" = "https://github.com/FortuneStreetModding/cs-board-tools/issues"
+
+[tool.hatch.version]
+path = "cs_board_tools/__about__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
