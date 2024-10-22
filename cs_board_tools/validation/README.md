@@ -76,13 +76,14 @@ The attributes for these objects are listed below in full.
 | issue_count            |          int           | (errors + warnings)                                           |
 | success_count          |          int           | Number of successful tasks.                                   |
 | total_count            |          int           | Total tasks. (successful and not)                             |
+| board_configuration    |      CheckResult       | The results of the board configuration checks.                |
 | consistency            |      CheckResult       | The results of the frb/yaml consistency check.                |
-| door                   |      CheckResult       | The results of the doors and dice check.                      |
+| icon                   |      CheckResult       | The results of the mapIcon check.                             |
 | max_paths              |      CheckResult       | The results of the max paths check.                           |
 | music_download         |      CheckResult       | The results of the music download check.                      |
-| naming                 |      CheckResult       | The results of the naming convention check.                   |
+| naming                 |      CheckResult       | The results of the naming convention checks.                  |
 | screenshots            |      CheckResult       | The results of the max paths check.                           |
-| venture                |      CheckResult       | The results of the venture card check.                        |
+| venture                |      CheckResult       | The results of the venture card checks.                       |
 | yaml                   |      CheckResult       | The results of the yaml validation check.                     |
 | error_messages         |       list[str]        | All error messages in list form.                              |
 | informational_messages |       list[str]        | All informational messages in list form.                      |
@@ -98,4 +99,4 @@ The attributes for these objects are listed below in full.
 | data                   | any       | Can store anything you would like. Currently only used by the Max Paths check to return that value. |
 
 ## Further Reading
-For further information, please see the Documentation...which will be linked when it's up.
+For further information, please see the cs-board-tools documentation, here: [📚 cs-board-tools documentation](https://fortunestreetmodding.github.io/cs-board-tools/home.html).
