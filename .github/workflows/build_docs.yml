@@ -2,7 +2,7 @@ name: Build docs and publish them to Github Pages
 
 on:
   push:
-    branches: ["nikkums/development"] # for now
+    branches: ["main"]
 
 jobs:
   build-and-publish-docs:

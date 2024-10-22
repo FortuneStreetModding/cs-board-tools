@@ -2,7 +2,7 @@ name: Run tests
 
 on:
   push:
-    branches: ["nikkums/development"] # for now
+    branches: ["main"]
 
 jobs:
   run-tests:
