@@ -228,3 +228,19 @@ cs-board-tools validate -f SomeAwesomeBundle.zip
 ::::
 
 The information returned will differ depending on what type of file was passed in. For example, a screenshot test cannot be performed against a solo .frb file as the information needed to run that test lives in the `.yaml` descriptor file. Only Bundles are able to display the full range of information, and perform all validation tests, as they contain the .frb, the .yaml, and the other related files too.
+
+#### Optional Flags
+The Validation function supports a number of optional flags to change the behavior of the tests. These flags are detailed in the table below for easy reference.
+
+| short flag | long flag                         |  description                                                          |
+|------------|-----------------------------------|-----------------------------------------------------------------------|
+|   `-g`     | `--gdrive-api-key`                | Allows specifying a Google Drive API key for the Music Download test. |
+|   `-sbc`   | `--skip-board-configuration-test` | Skips the Board Configuration tests.                                  |
+|   `-sct`   | `--skip-consistency-test`         | Skips the Consistency tests.                                          |
+|   `-sdt`   | `--skip-music-download-test`      | Skips the Music Download tests.                                       |
+|   `-sit`   | `--skip-icon-test`                | Skips the Board Icon tests.                                           |
+|   `-snt`   | `--skip-naming-convention-test`   | Skips the Naming Convention tests.                                    |
+|   `-spt`   | `--skip-max-paths-test`           | Skips the Max Paths tests.                                            |
+|   `-sst`   | `--skip-screenshot-test`          | Skips the Screenshot tests.                                           |
+|   `-svt`   | `--skip-venture-card-test`        | Skips the Venture Card tests.                                         |
+|   `-sw`    | `--skip-warnings`                 | Silences warnings from output.                                        |
