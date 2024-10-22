@@ -117,12 +117,12 @@ def display(directory: str, file: str, gdrive_api_key=None):
 @click.command(short_help=validate_short_help_message)
 @click.option('-sbc', '--skip-board-configuration-test', is_flag=True, flag_value=True, default=False)
 @click.option('-sct', '--skip-consistency-test', is_flag=True, flag_value=True, default=False)
-@click.option('-smt', '--skip-icon-test', is_flag=True, flag_value=True, default=False)
-@click.option('-spt', '--skip-max-paths-test', is_flag=True, flag_value=True, default=False)
 @click.option('-sdt', '--skip-music-download-test', is_flag=True, flag_value=True, default=False)
+@click.option('-sit', '--skip-icon-test', is_flag=True, flag_value=True, default=False)
+@click.option('-spt', '--skip-max-paths-test', is_flag=True, flag_value=True, default=False)
 @click.option('-snt', '--skip-naming-convention-test', is_flag=True, flag_value=True, default=False)
-@click.option('-sst', '--skip-screenshots-test', is_flag=True, flag_value=True, default=False)
-@click.option('-svt', '--skip-venture-cards-test', is_flag=True, flag_value=True, default=False)
+@click.option('-sst', '--skip-screenshot-test', is_flag=True, flag_value=True, default=False)
+@click.option('-svt', '--skip-venture-card-test', is_flag=True, flag_value=True, default=False)
 @click.option('-sw', '--skip-warnings', is_flag=True, flag_value=True, default=False)
 @click.option('-g', '--gdrive-api-key', is_flag=False, flag_value=None, default=None)
 @click.option('-d', '--directory', type=str, help=directory_flag_help_message)
@@ -150,47 +150,58 @@ def validate(directory: str,
     * cs-board-tools validate -f BoardName.zip
 
     :param directory: (-d or --directory) A directory name. "."
-    works if your working directory is already the directory you
-    want to check.
+        works if your working directory is already the directory you
+        want to check.
     :type directory: str, optional
 
     :param file: (-f or --file) A file name. "file.zip" works if
-    file.zip is in your current working directory.
+        file.zip is in your current working directory.
     :type file: str, optional
 
-    :param gdrive-api-key: An API key for Google Drive. If you
-    would prefer, you can set the $GDRIVE_API_KEY environment
-    variable instead. (e.g. `export GDRIVE_API_KEY=value`)
-    :type gdrive-api-key: str, optional
+    :param gdrive_api_key: (-g or --gdrive-api-key) An API key for
+        Google Drive. If you would prefer, you can set the
+        $GDRIVE_API_KEY environment variable instead.
+        (e.g. `export GDRIVE_API_KEY=value`)
+    :type gdrive_api_key: str, optional
 
-    :param skip_board_configuration_test: If set, skips the Board
-    Configuration tests.
+    :param skip_board_configuration_test: (-sbc or
+        --skip-board-configuration-test) If set, skips the Board
+        Configuration tests.
     :type skip_board_configuration_test: bool, optional
 
-    :param skip-consistency-test: If set, skips the Board Consistency
-    tests.
-    :type skip-consistency-test: bool, optional
+    :param skip_consistency_test: (-sct or --skip-consistency-test)
+        If set, skips the Board Consistency tests.
+    :type skip_consistency_test: bool, optional
 
-    :param skip-icon-test: If set, skips the Icon tests.
-    :type skip-icon-test: bool, optional
+    :param skip_music_download_test: (-sct or
+        --skip-music-download-test) If set, skips the Music Download
+        tests.
+    :type skip_music_download-test: bool, optional
 
-    :param skip-max-paths-test: If set, skips the Max Paths tests.
-    :type skip-max-paths-test: bool, optional
+    :param skip_icon_test: (-sit or --skip-icon-test) If set, skips
+        the Board Icon tests.
+    :type skip_icon_test: bool, optional
 
-    :param skip_naming_convention_test: If set, skips the Naming
-    Convention tests.
+    :param skip_max_paths_test: (-spt or --skip-max-paths-test) If
+        set, skips the Max Paths tests.
+    :type skip_max_paths_test: bool, optional
+
+    :param skip_naming_convention_test: (-snt or
+        --skip-naming-convention-test) If set, skips the Naming
+        Convention tests.
     :type skip_naming_convention_test: bool, optional
 
-    :param skip_screenshots_test: If set, skips the Screenshot tests.
+    :param skip_screenshots_test: (-sst or -skip-screenshot-test)
+        If set, skips the Screenshot tests.
     :type skip_screenshots_test: bool, optional
 
-    :param skip-venture-cards-test: If set, skips the Venture
-    Card tests.
-    :type skip-venture-cards-test: bool, optional
+    :param skip_venture_cards_test: (-svt or --skip-venture-card-test)
+        If set, skips the Venture Card tests.
+    :type skip_venture_cards_test: bool, optional
 
-    :param skip-warnings: If set, skips tests resulting in
-    "Warning" messages.
-    :type skip-warnings: bool, optional
+    :param skip_warnings: (-sw or --skip-warnings) If set, omits
+        test result "Warning" messages.
+    :type skip_warnings: bool, optional
     """
     print("\n        -{========================>")
     print(f"        -{{  cs-board-tools {__version__}  }}-")
