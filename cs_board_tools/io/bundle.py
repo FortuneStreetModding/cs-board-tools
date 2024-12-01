@@ -153,6 +153,8 @@ def read_zip(file_path: Path, temp_dir_path: str = "./temp") -> list[Bundle]:
     directories = []
 
     for x in files:  # I love this joke
+        if "_MACOSX" in x:
+            files.remove(x)
         if x.endswith("/"):
             directories.append(x)
 
