@@ -70,22 +70,31 @@ def read_files(files: list[Path]) -> list[Bundle]:
     for x in files:
         if x.endswith(".brstm"):
             brstm_filenames.append(x)
+            brstm_filenames.sort()
         elif x.endswith(".cmpres"):
             cmpres_filenames.append(x)
+            cmpres_filenames.sort()
         elif x.endswith(".frb"):
             frb_filenames.append(x)
+            frb_filenames.sort()
         elif x.endswith(".png"):
             png_filenames.append(x)
+            png_filenames.sort()
         elif x.endswith(".webp"):
             webp_filenames.append(x)
+            webp_filenames.sort()
         elif x.endswith(".yaml"):
             yaml_filenames.append(x)
+            yaml_filenames.sort()
         elif x.endswith(".zip"):
             zip_filenames.append(x)
+            zip_filenames.sort()
         elif x.endswith("/"):
             directories.append(x)
+            directories.sort()
         else:
             unused_filenames.append(x)
+            unused_filenames.sort()
 
     # # now we can actually start processing them
     bundles = []

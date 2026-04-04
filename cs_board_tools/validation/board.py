@@ -70,7 +70,7 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
     """
     result = ""
     squares_exceeded_dict = {}
-    filenum = 1
+    frb_num = 1
 
     for f in frbs:
         squares_exceeded = []
@@ -83,9 +83,9 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
             square_id += 1
 
         if len(squares_exceeded) > 0:
-            squares_exceeded_dict[f"{filenum}"] = squares_exceeded
+            squares_exceeded_dict[f"{frb_num}"] = squares_exceeded
 
-        filenum + 1
+        frb_num += 1
 
     if squares_exceeded_dict:
         squares_exceeded_message = ""
@@ -127,8 +127,10 @@ def check_switch_ids(frbs: list[BoardFile]) -> str:
                 if s.district_destination_id != len(frbs):
                     offending_switches_in_file.append(square_id)
             square_id += 1
+
         if len(offending_switches_in_file) > 0:
             offending_switch_dict[f"{frb_num}"] = offending_switches_in_file
+
         frb_num += 1
 
     if offending_switch_dict:
