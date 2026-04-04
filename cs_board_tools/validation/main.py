@@ -265,7 +265,7 @@ def validate_board_file(
         board_result.board_name = "Unknown .frb"
 
         board_result.board_configuration = check_board_configuration(
-            frb=f,
+            frbs=[f],
             skip=skip_board_configuration_tests
         )
         board_result.max_paths = check_max_paths(

@@ -78,9 +78,9 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
 
         for s in f._board_data.squares:
             if abs(s.positionX) > 672:
-                squares_exceeded + 1
+                squares_exceeded += 1
             elif abs(s.positionY) > 544:
-                squares_exceeded + 1
+                squares_exceeded += 1
 
         squares_exceeded_dict[filenum] = squares_exceeded
 
@@ -91,14 +91,14 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
 
     if most_squares_exceeded > 0:
         squares_exceeded_message = ""
-        for k, v in squares_exceeded_dict:
+        for k, v in squares_exceeded_dict.items():
             squares_exceeded_message += f"{k}: {v}, "
 
         result = (
             "This board contains squares that exceed the "
             "recommended maximum coordinates of +/- 544 Y, "
             "672 X. The results of the the check are as "
-            "follows, illustrating the number of offending"
+            "follows, illustrating the number of offending "
             f"squares in each .frb file: {squares_exceeded_message}"
         )
 
@@ -108,7 +108,7 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
 def check_switch_ids(frbs: list[BoardFile]) -> str:
     """
     Checks the Destination ID of any Switch squares in any of the
-    frbs equal the number of total frbs there are in this bundle.
+    frbs is equal the number of total frbs there are in this bundle.
 
     :param frbs: A list of BoardFile objects representing one or more
         .frb files.
@@ -118,30 +118,34 @@ def check_switch_ids(frbs: list[BoardFile]) -> str:
         fails, or an empty string if it passes.
     :rtype: str
     """
+    frb_num = 1
     offending_switch_dict = {}
     at_least_one_bad_switch = False
     result = ""
 
     for f in frbs:
-        offending_switches_in_file = 0
+        offending_switches_in_file = []
+        square_id = 0
         for s in f.squares:
             if s.square_type == SquareType.SwitchSquare:
                 if s.district_destination_id != len(frbs):
-                    offending_switches_in_file + 1
-        if offending_switches_in_file > 0:
-            offending_switch_dict[f"{f}"] = offending_switches_in_file
+                    offending_switches_in_file.append(square_id)
+            square_id += 1
+        if len(offending_switches_in_file) > 0:
+            offending_switch_dict[f"{frb_num}"] = offending_switches_in_file
             at_least_one_bad_switch = True
+        frb_num += 1
 
     if at_least_one_bad_switch:
         switch_message = ""
-        for k,v in offending_switch_dict:
-            switch_message += f"{k}: {v}, "
+        for k,v in offending_switch_dict.items():
+            switch_message += f"\nFRB file #{k}, Square IDs: {v}, "
         result = (
             "At least one of the Switch squares in at least one of "
-            "your .frb files has a Destination Square ID that is set "
-            "incorrectly. This value should match the total number of "
-            ".frb files in your bundle. The check's results are as "
-            f"follows: {switch_message}"
+            "your .frb files has a District ID / Destination Square "
+            "ID that is set incorrectly. This value should match the "
+            "total number of .frb files in your bundle. The check's "
+            f"results are as follows: {switch_message}"
         )
     return result
 
@@ -280,11 +284,6 @@ def check_board_configuration(descriptor: MapDescriptor = None, frbs: list[Board
 
 
     # Mini-checks for individual or groups of issues go here.
-
-    # descriptor and frb checks
-    # if descriptor and frbs:
-
-
     # descriptor checks
     if descriptor:
         author_result = check_yaml_authors(descriptor)
@@ -306,6 +305,7 @@ def check_board_configuration(descriptor: MapDescriptor = None, frbs: list[Board
             error_messages.append(doors_and_dice_result)
 
         square_coordinates_result = check_square_coordinates(frbs)
+        print(square_coordinates_result)
         if square_coordinates_result:
             error_messages.append(square_coordinates_result)
 
