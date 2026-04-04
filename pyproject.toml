@@ -22,11 +22,11 @@ classifiers = [
 ]
 dependencies = [
   'bytechomp @ git+https://github.com/AndrewSpittlemeister/bytechomp.git',
-  'click ~= 8.1.7',
-  'jsonschema ~= 4.19.1',
-  'prettytable ~= 3.9.0',
-  'ruamel.yaml ~= 0.18.5',
-  'requests ~= 2.31.0',
+  'click ~= 8.3.2',
+  'jsonschema ~= 4.26.0',
+  'prettytable ~= 3.17.0',
+  'ruamel.yaml ~= 0.19.1',
+  'requests ~= 2.33.1',
 ]
 
 [project.scripts]
