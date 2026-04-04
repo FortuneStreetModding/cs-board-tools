@@ -94,18 +94,18 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
 
         result = (
             "This board contains squares that exceed the "
-            "recommended maximum coordinates of +/- 544 Y, "
-            "672 X. The results of the the check are as "
-            f"follows: {squares_exceeded_message}"
+            "recommended maximum coordinates of +/- 672, "
+            "544. The results of the check are as follows: "
+            f"{squares_exceeded_message}"
         )
 
     return result
 
 
-def check_switch_ids(frbs: list[BoardFile]) -> str:
+def check_switch_ids_are_not_zero(frbs: list[BoardFile]) -> str:
     """
-    Checks the Destination ID of any Switch squares in any of the
-    frbs is equal the number of total frbs there are in this bundle.
+    Checks that the District IDs of all Switch squares in all frb files
+    are not 0, unless there are only two frb files.
 
     :param frbs: A list of BoardFile objects representing one or more
         .frb files.
@@ -124,7 +124,7 @@ def check_switch_ids(frbs: list[BoardFile]) -> str:
         square_id = 0
         for s in f.squares:
             if s.square_type == SquareType.SwitchSquare:
-                if s.district_destination_id != len(frbs):
+                if s.district_destination_id == 0 and len(frbs) > 2:
                     offending_switches_in_file.append(square_id)
             square_id += 1
 
@@ -138,11 +138,53 @@ def check_switch_ids(frbs: list[BoardFile]) -> str:
         for k,v in offending_switch_dict.items():
             switch_message += f"FRB file #{k}, Square IDs: {v}, "
         result = (
-            "At least one of the Switch squares in at least one of "
-            "your .frb files has a District ID / Destination Square "
-            "ID that is set incorrectly. This value should match the "
-            "total number of .frb files in your bundle. The check's "
-            f"results are as follows: {switch_message}"
+            "The District ID of at least one Switch square is set to 0, "
+            "but there are more than two board states. The results of "
+            f"this check are as follows: {switch_message}"
+        )
+    return result
+
+
+def check_switch_ids_are_not_too_high(frbs: list[BoardFile]) -> str:
+    """
+    Checks that the District IDs of all Switch squares in all frb files
+    are not set to a value that exceeds the total number of frb files
+    in the bundle.
+
+    :param frbs: A list of BoardFile objects representing one or more
+        .frb files.
+    :type frbs: list[BoardFile]
+
+    :return: A string containing the error message if the check
+        fails, or an empty string if it passes.
+    :rtype: str
+    """
+    frb_num = 1
+    offending_switch_dict = {}
+    result = ""
+
+    for f in frbs:
+        offending_switches_in_file = []
+        square_id = 0
+        for s in f.squares:
+            if s.square_type == SquareType.SwitchSquare:
+                if s.district_destination_id > len(frbs):
+                    offending_switches_in_file.append(square_id)
+            square_id += 1
+
+        if len(offending_switches_in_file) > 0:
+            offending_switch_dict[f"{frb_num}"] = offending_switches_in_file
+
+        frb_num += 1
+
+    if offending_switch_dict:
+        switch_message = ""
+        for k,v in offending_switch_dict.items():
+            switch_message += f"FRB file #{k}, Square IDs: {v}, "
+        result = (
+            "The District ID of at least one Switch square is set to "
+            "a value that exceeds the total number of .frb files. The "
+            f"results of this check are as follows: {switch_message}"
         )
     return result
 
@@ -306,9 +348,13 @@ def check_board_configuration(descriptor: MapDescriptor = None, frbs: list[Board
         if square_coordinates_result:
             error_messages.append(square_coordinates_result)
 
-        switch_id_result = check_switch_ids(frbs)
-        if switch_id_result:
-            error_messages.append(switch_id_result)
+        switch_id_zero_result = check_switch_ids_are_not_zero(frbs)
+        if switch_id_zero_result:
+            error_messages.append(switch_id_zero_result)
+
+        switch_id_too_high_result = check_switch_ids_are_not_too_high(frbs)
+        if switch_id_too_high_result:
+            error_messages.append(switch_id_too_high_result)
 
         two_way_door_result = check_two_way_doors(frbs)
         if two_way_door_result:
