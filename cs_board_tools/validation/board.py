@@ -70,36 +70,33 @@ def check_square_coordinates(frbs: list[BoardFile]) -> str:
     """
     result = ""
     squares_exceeded_dict = {}
-    most_squares_exceeded = 0
     filenum = 1
 
     for f in frbs:
-        squares_exceeded = 0
-
+        squares_exceeded = []
+        square_id = 0
         for s in f._board_data.squares:
             if abs(s.positionX) > 672:
-                squares_exceeded += 1
+                squares_exceeded.append(square_id)
             elif abs(s.positionY) > 544:
-                squares_exceeded += 1
+                squares_exceeded.append(square_id)
+            square_id += 1
 
-        squares_exceeded_dict[filenum] = squares_exceeded
-
-        if squares_exceeded > most_squares_exceeded:
-            most_squares_exceeded = squares_exceeded
+        if len(squares_exceeded) > 0:
+            squares_exceeded_dict[f"{filenum}"] = squares_exceeded
 
         filenum + 1
 
-    if most_squares_exceeded > 0:
+    if squares_exceeded_dict:
         squares_exceeded_message = ""
         for k, v in squares_exceeded_dict.items():
-            squares_exceeded_message += f"{k}: {v}, "
+            squares_exceeded_message += f"FRB file #{k}, Square IDs: {v}, "
 
         result = (
             "This board contains squares that exceed the "
             "recommended maximum coordinates of +/- 544 Y, "
             "672 X. The results of the the check are as "
-            "follows, illustrating the number of offending "
-            f"squares in each .frb file: {squares_exceeded_message}"
+            f"follows: {squares_exceeded_message}"
         )
 
     return result
@@ -120,7 +117,6 @@ def check_switch_ids(frbs: list[BoardFile]) -> str:
     """
     frb_num = 1
     offending_switch_dict = {}
-    at_least_one_bad_switch = False
     result = ""
 
     for f in frbs:
@@ -133,13 +129,12 @@ def check_switch_ids(frbs: list[BoardFile]) -> str:
             square_id += 1
         if len(offending_switches_in_file) > 0:
             offending_switch_dict[f"{frb_num}"] = offending_switches_in_file
-            at_least_one_bad_switch = True
         frb_num += 1
 
-    if at_least_one_bad_switch:
+    if offending_switch_dict:
         switch_message = ""
         for k,v in offending_switch_dict.items():
-            switch_message += f"\nFRB file #{k}, Square IDs: {v}, "
+            switch_message += f"FRB file #{k}, Square IDs: {v}, "
         result = (
             "At least one of the Switch squares in at least one of "
             "your .frb files has a District ID / Destination Square "
