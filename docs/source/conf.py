@@ -47,13 +47,25 @@ html_static_path = ['_static']
 
 html_theme_options = {
     # ... other options ...
-    "footer_links": ",".join([
-        "Documentation|https://fortunestreetmodding.github.io/cs-board-tools/",
-        "Package|https://pypi.com/cs-board-tools",
-        "Discord|https://discord.gg/DE9Hn7T",
-        "Repository|https://github.com/fortunestreetmodding/cs-board-tools",
-        "Issues|https://github.com/fortunestreetmodding/cs-board-tools/issues",
-    ]),
+    "footer_links": [
+        {
+            'text': 'Home',
+            'link': 'https://fortunestreetmodding.github.io/cs-board-tools/',
+        }, {
+            'text': 'Repository',
+            'link': 'https://github.com/fortunestreetmodding/cs-board-tools',
+            'target': '_blank',
+        }, {
+            'text': 'Issues',
+            'link': 'https://github.com/fortunestreetmodding/cs-board-tools/issues',
+            'target': '_blank',
+        },
+        {
+            'text': 'Discord',
+            'link': 'https://discord.gg/DE9Hn7T',
+            'target': '_blank',
+        },
+    ],
     "style": "blue",
     "repository_name": "fortunestreetmodding/cs-board-tools",
     "repository_url": "https://github.com/fortunestreetmodding/cs-board-tools",
